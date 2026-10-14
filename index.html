@@ -152,6 +152,12 @@
       background: rgba(90,200,250,0.08); border: 1px solid rgba(90,200,250,0.18);
       color: var(--muted); font-size: 13px;
     }
+    .notice-warn {
+      margin-top: 14px; padding: 12px 14px; border-radius: 12px;
+      background: rgba(255,214,10,0.10); border: 1px solid rgba(255,214,10,0.28);
+      color: #f5e6a3; font-size: 13px; line-height: 1.5;
+    }
+    .notice-warn strong { color: #ffe566; font-weight: 650; }
   </style>
 </head>
 <body>
@@ -197,10 +203,15 @@
           <li>Checkout via Creem (cards / Apple Pay where available)</li>
         </ul>
         <a class="btn btn-primary" style="width:100%" href="https://www.creem.io/payment/prod_zA7FU0N4xT94P9fGuDpF" target="_blank" rel="noopener">Buy with Creem — $4.99</a>
+        <p class="notice-warn" id="buy-status" role="status">
+          <strong>Checkout opens in a new tab.</strong> Creem live payments are still under store review —
+          the Creem page may say Live payments are not enabled yet. That is expected; the click still
+          opens the real checkout URL so reviewers can verify the Buy button response.
+        </p>
         <p class="notice" id="buy-note">
           After payment, Creem emails your license key. Open motomotos → Settings → Account (or Activate),
-          paste the key, and unlock. Up to 3 Macs. Live checkout unlocks after Creem finishes store review
-          (usually within 48 business hours). Questions: <a href="mailto:support@motomotos.com">support@motomotos.com</a>.
+          paste the key, and unlock. Up to 3 Macs. Questions:
+          <a href="mailto:support@motomotos.com">support@motomotos.com</a>.
         </p>
       </aside>
     </section>
