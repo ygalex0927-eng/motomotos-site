@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>motomotos — Dynamic Island for Mac</title>
+  <meta name="description" content="motomotos turns your MacBook notch into a live status island for AI coding tools, widgets, media, and a playful desktop pet. One-time license $4.99." />
+  <meta name="theme-color" content="#0a0a0b" />
+  <link rel="icon" type="image/png" href="assets/icon-256.png" />
+  <link rel="apple-touch-icon" href="assets/icon-256.png" />
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --bg-elevated: #141416;
+      --bg-card: #1a1a1e;
+      --border: rgba(255,255,255,0.08);
+      --text: #f5f5f7;
+      --muted: #a1a1a6;
+      --accent: #5ac8fa;
+      --accent-strong: #0a84ff;
+      --good: #30d158;
+      --radius: 20px;
+      --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { width: min(1080px, calc(100% - 40px)); margin: 0 auto; }
+    header {
+      position: sticky; top: 0; z-index: 20;
+      backdrop-filter: saturate(180%) blur(16px);
+      background: rgba(10,10,11,0.72);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 0; gap: 16px;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; color: var(--text); text-decoration: none; font-weight: 600; }
+    .brand img { width: 28px; height: 28px; border-radius: 7px; }
+    .nav-links { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+    .nav-links a { color: var(--muted); font-size: 14px; text-decoration: none; }
+    .nav-links a:hover { color: var(--text); }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 8px; border: 0; border-radius: 999px; padding: 12px 22px;
+      font-weight: 600; font-size: 15px; cursor: pointer; text-decoration: none !important;
+      transition: transform .15s ease, opacity .15s ease, background .15s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary { background: var(--accent-strong); color: white; }
+    .btn-primary:hover { background: #0077ed; }
+    .btn-ghost {
+      background: transparent; color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .hero {
+      padding: 72px 0 48px;
+      display: grid; gap: 36px;
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: center;
+    }
+    @media (max-width: 860px) {
+      .hero { grid-template-columns: 1fr; padding-top: 48px; }
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: var(--accent); font-size: 13px; font-weight: 600;
+      letter-spacing: .04em; text-transform: uppercase; margin-bottom: 14px;
+    }
+    h1 {
+      font-size: clamp(34px, 5vw, 52px);
+      line-height: 1.08; letter-spacing: -0.03em; margin-bottom: 16px;
+    }
+    .lead { color: var(--muted); font-size: 18px; max-width: 36em; margin-bottom: 28px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 18px; }
+    .fine { color: var(--muted); font-size: 13px; }
+    .price-card {
+      background: linear-gradient(180deg, #1d1d22 0%, #121214 100%);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.45);
+    }
+    .price-card .label { color: var(--muted); font-size: 13px; margin-bottom: 8px; }
+    .price-card .amount {
+      font-size: 48px; font-weight: 700; letter-spacing: -0.04em;
+      display: flex; align-items: baseline; gap: 8px;
+    }
+    .price-card .amount span { font-size: 16px; font-weight: 500; color: var(--muted); }
+    .price-card ul { list-style: none; margin: 22px 0; display: grid; gap: 10px; }
+    .price-card li {
+      display: flex; gap: 10px; align-items: flex-start;
+      color: var(--text); font-size: 14px;
+    }
+    .price-card li::before {
+      content: ""; width: 8px; height: 8px; margin-top: 6px; flex: none;
+      border-radius: 50%; background: var(--good);
+      box-shadow: 0 0 0 4px rgba(48,209,88,0.15);
+    }
+    .section { padding: 56px 0; border-top: 1px solid var(--border); }
+    .section h2 {
+      font-size: 28px; letter-spacing: -0.02em; margin-bottom: 12px;
+    }
+    .section .sub { color: var(--muted); margin-bottom: 28px; max-width: 40em; }
+    .grid {
+      display: grid; gap: 16px;
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+    }
+    .card h3 { font-size: 17px; margin-bottom: 8px; }
+    .card p { color: var(--muted); font-size: 14px; }
+    .cta-band {
+      margin: 24px 0 0;
+      padding: 28px;
+      border-radius: 24px;
+      background: radial-gradient(1200px 200px at 20% 0%, rgba(10,132,255,0.25), transparent),
+                  linear-gradient(180deg, #17171b, #101012);
+      border: 1px solid var(--border);
+      display: flex; flex-wrap: wrap; gap: 16px;
+      align-items: center; justify-content: space-between;
+    }
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 0 48px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .footer-row {
+      display: flex; flex-wrap: wrap; gap: 14px 24px;
+      justify-content: space-between; align-items: center;
+    }
+    .footer-links { display: flex; gap: 16px; flex-wrap: wrap; }
+    .footer-links a { color: var(--muted); }
+    .footer-links a:hover { color: var(--text); }
+    .notice {
+      margin-top: 14px; padding: 12px 14px; border-radius: 12px;
+      background: rgba(90,200,250,0.08); border: 1px solid rgba(90,200,250,0.18);
+      color: var(--muted); font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="index.html">
+        <img src="assets/icon-256.png" alt="motomotos icon" width="28" height="28" />
+        motomotos
+      </a>
+      <nav class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a class="btn btn-primary" href="#buy" style="padding:8px 16px;font-size:13px;">Buy $4.99</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="wrap hero">
+      <div>
+        <div class="eyebrow">macOS · Dynamic Island</div>
+        <h1>Your MacBook notch, finally useful.</h1>
+        <p class="lead">
+          motomotos turns the empty space around the notch into a live status island.
+          See AI coding sessions, quotas, media, system controls, and widgets at a glance —
+          approve prompts, jump back to a terminal, and keep a playful pet beside your work.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" id="buy" href="#pricing">Get lifetime license — $4.99</a>
+          <a class="btn btn-ghost" href="mailto:support@motomotos.com">Contact support</a>
+        </div>
+        <p class="fine">10-day free trial on Mac. One-time purchase unlocks future Mac updates. Requires macOS 13+ and a notched MacBook for the full island experience.</p>
+      </div>
+      <aside class="price-card" id="pricing" aria-label="Pricing">
+        <div class="label">Lifetime license</div>
+        <div class="amount">$4.99 <span>USD · forever</span></div>
+        <ul>
+          <li>One-time payment — no subscription</li>
+          <li>Includes future Mac app updates</li>
+          <li>Activate on up to 3 Macs you own</li>
+          <li>Checkout via Creem (cards / Apple Pay where available)</li>
+        </ul>
+        <a class="btn btn-primary" style="width:100%" href="#buy-note">Buy with Creem</a>
+        <p class="notice" id="buy-note">
+          Creem checkout link will be connected after merchant Live approval.
+          Until then, email <a href="mailto:support@motomotos.com">support@motomotos.com</a> if you need a license.
+        </p>
+      </aside>
+    </section>
+
+    <section class="section" id="features">
+      <div class="wrap">
+        <h2>Built for people who live in the terminal</h2>
+        <p class="sub">Keep AI coding tools, media, and everyday controls in the notch — without stealing focus when you don’t need them.</p>
+        <div class="grid">
+          <article class="card">
+            <h3>AI session island</h3>
+            <p>Watch coding agents and terminal sessions from the notch. Jump back to the right window, and handle approvals without digging through tabs.</p>
+          </article>
+          <article class="card">
+            <h3>Quota at a glance</h3>
+            <p>Shows real quota numbers when they can be read. If a tool can’t be read, motomotos says so instead of inventing a fake number.</p>
+          </article>
+          <article class="card">
+            <h3>Widget panel</h3>
+            <p>Expand into a customizable widget board — clocks, weather, media, volume/brightness controls, shortcuts, and more in S/M/L sizes.</p>
+          </article>
+          <article class="card">
+            <h3>Music & system HUD</h3>
+            <p>Now Playing for Apple Music, plus elastic volume and brightness feedback that feels at home on macOS.</p>
+          </article>
+          <article class="card">
+            <h3>Desktop pet</h3>
+            <p>A little companion that mirrors your work state — on the island, as a widget, or floating on the desktop.</p>
+          </article>
+          <article class="card">
+            <h3>Private by design</h3>
+            <p>Runs locally on your Mac. No keychain scraping, no credential harvesting. See the Privacy Policy for details.</p>
+          </article>
+        </div>
+
+        <div class="cta-band">
+          <div>
+            <strong style="font-size:18px;display:block;margin-bottom:4px;">Ready when you are</strong>
+            <span class="fine">$4.99 lifetime · support@motomotos.com · privacy &amp; terms linked below</span>
+          </div>
+          <a class="btn btn-primary" href="#pricing">View pricing</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-row">
+      <div>© 2026 motomotos. Independent Mac software.</div>
+      <div class="footer-links">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="mailto:support@motomotos.com">support@motomotos.com</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
