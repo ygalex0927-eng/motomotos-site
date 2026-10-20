@@ -1,55 +1,21 @@
-# motomotos-site
+# motomotos.com — site v2
 
-Public marketing site for **motomotos** (Mac Dynamic Island app).
+Static site, no build step. English by default; 中文 (¥19.9) via the EN / 中文 switch or `?region=cn`. One price per page.
 
-- Temporary Pages URL: https://ygalex0927-eng.github.io/motomotos-site/
-- Production domain (target): https://motomotos.com (and https://www.motomotos.com)
-- Private app source stays in `ygalex0927-eng/motomotos` — **do not** put source code here.
-- Support: support@motomotos.com
-- Creem product checkout: https://www.creem.io/payment/prod_zA7FU0N4xT94P9fGuDpF
+- `index.html`, `css/site.css`, `js/main.js` (motion + scroll scenes), `js/i18n.js` (all copy, prices, Creem link, install command)
+- `assets/en|zh/` — real app frames, captured offscreen from the app (`~/Documents/Codex/2026-10-20/motomotos-launch15/capture/export_site.py`)
+- `assets/film/launch.mp4` — the 15 s launch film
+- `privacy.html`, `terms.html`, `install.sh` — copied unchanged from `~/claude-workdir/motomotos-web/public/`
+- `qa/` — Grok 4.7 QA run (brief, script, 109 screenshots, report). Not needed on the server.
 
-## Local preview
+Preview: `python3 -m http.server 8811` here, open http://localhost:8811/ (`?region=cn` for 中文).
 
-Open `index.html` in a browser, or:
+## Deploy (not done yet — needs 膏哥's go-ahead)
+Upload everything except `qa/` and `README.md` to the web root that serves motomotos.com (ECS `/var/www/motomotos`, see `~/claude-workdir/motomotos-web/DEPLOY.md`). Keep the server's existing `/downloads/Motomotos.dmg` and `/install.sh`.
+After any CSS/JS edit, bump the `?v=` in `index.html` and the `./i18n.js?v=` import in `js/main.js` so browsers fetch the new files.
 
-```bash
-python3 -m http.server 8080
-```
-
-## GitHub Pages
-
-This repo serves from the `main` branch root. `CNAME` pins the custom domain to `motomotos.com`.
-
-## Aliyun DNS records (required for custom domain)
-
-Domain registrar: Aliyun (万网) for `motomotos.com`.
-GitHub Pages user site host: `ygalex0927-eng.github.io`
-
-Add these records in 阿里云 DNS 解析 (do **not** wait for ICP — overseas Creem review can use the .com first):
-
-| 主机记录 | 类型 | 记录值 | 说明 |
-| --- | --- | --- | --- |
-| `@` | `A` | `185.199.108.153` | Apex → GitHub Pages |
-| `@` | `A` | `185.199.109.153` | Apex → GitHub Pages |
-| `@` | `A` | `185.199.110.153` | Apex → GitHub Pages |
-| `@` | `A` | `185.199.111.153` | Apex → GitHub Pages |
-| `@` | `AAAA` | `2606:50c0:8000::153` | Apex IPv6 (optional but recommended) |
-| `@` | `AAAA` | `2606:50c0:8001::153` | Apex IPv6 |
-| `@` | `AAAA` | `2606:50c0:8002::153` | Apex IPv6 |
-| `@` | `AAAA` | `2606:50c0:8003::153` | Apex IPv6 |
-| `www` | `CNAME` | `ygalex0927-eng.github.io` | www → GitHub Pages user domain |
-
-Notes:
-
-- If Aliyun already has conflicting `@` A/CNAME records (parking page, CDN, etc.), delete or pause them first.
-- TTL can stay default (10 minutes). Propagation may take up to a few hours.
-- After DNS answers correctly, GitHub Pages → Custom domain should show `motomotos.com` with HTTPS available (Enforce HTTPS).
-- Project path `/motomotos-site/` is only for the temporary `*.github.io` URL; on the custom domain the site is served at `/`.
-
-Verify:
-
-```bash
-dig motomotos.com +noall +answer -t A
-dig www.motomotos.com +nostats +nocomments +nocmd
-curl -sI https://motomotos.com | head
-```
+## Facts the copy relies on (checked against the app source on 2026-10-20)
+- Binary is arm64 only → "Apple silicon". The island needs a built-in notch (`findBuiltinNotch`).
+- After the trial only paid widgets lock; clock and cat keep working (`License.blocks`).
+- Approvals on the island: Grok CLI. Quota: Grok CLI, Codex; Claude Code after connecting its status line.
+- Lyrics: NetEase only. Apple Music / Spotify: cover + controls.

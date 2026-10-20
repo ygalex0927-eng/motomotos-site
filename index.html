@@ -1,272 +1,230 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>motomotos — Dynamic Island for Mac</title>
-  <meta name="description" content="motomotos turns your MacBook notch into a live status island for AI coding tools, widgets, media, and a playful desktop pet. One-time license $4.99." />
-  <meta name="theme-color" content="#0a0a0b" />
-  <link rel="icon" type="image/png" href="assets/icon-256.png" />
-  <link rel="apple-touch-icon" href="assets/icon-256.png" />
-  <style>
-    :root {
-      --bg: #0a0a0b;
-      --bg-elevated: #141416;
-      --bg-card: #1a1a1e;
-      --border: rgba(255,255,255,0.08);
-      --text: #f5f5f7;
-      --muted: #a1a1a6;
-      --accent: #5ac8fa;
-      --accent-strong: #0a84ff;
-      --good: #30d158;
-      --radius: 20px;
-      --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.55;
-      -webkit-font-smoothing: antialiased;
-    }
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    .wrap { width: min(1080px, calc(100% - 40px)); margin: 0 auto; }
-    header {
-      position: sticky; top: 0; z-index: 20;
-      backdrop-filter: saturate(180%) blur(16px);
-      background: rgba(10,10,11,0.72);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 0; gap: 16px;
-    }
-    .brand { display: flex; align-items: center; gap: 10px; color: var(--text); text-decoration: none; font-weight: 600; }
-    .brand img { width: 28px; height: 28px; border-radius: 7px; }
-    .nav-links { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
-    .nav-links a { color: var(--muted); font-size: 14px; text-decoration: none; }
-    .nav-links a:hover { color: var(--text); }
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center;
-      gap: 8px; border: 0; border-radius: 999px; padding: 12px 22px;
-      font-weight: 600; font-size: 15px; cursor: pointer; text-decoration: none !important;
-      transition: transform .15s ease, opacity .15s ease, background .15s ease;
-    }
-    .btn:hover { transform: translateY(-1px); }
-    .btn-primary { background: var(--accent-strong); color: white; }
-    .btn-primary:hover { background: #0077ed; }
-    .btn-ghost {
-      background: transparent; color: var(--text);
-      border: 1px solid var(--border);
-    }
-    .hero {
-      padding: 72px 0 48px;
-      display: grid; gap: 36px;
-      grid-template-columns: 1.15fr 0.85fr;
-      align-items: center;
-    }
-    @media (max-width: 860px) {
-      .hero { grid-template-columns: 1fr; padding-top: 48px; }
-    }
-    .eyebrow {
-      display: inline-flex; align-items: center; gap: 8px;
-      color: var(--accent); font-size: 13px; font-weight: 600;
-      letter-spacing: .04em; text-transform: uppercase; margin-bottom: 14px;
-    }
-    h1 {
-      font-size: clamp(34px, 5vw, 52px);
-      line-height: 1.08; letter-spacing: -0.03em; margin-bottom: 16px;
-    }
-    .lead { color: var(--muted); font-size: 18px; max-width: 36em; margin-bottom: 28px; }
-    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 18px; }
-    .fine { color: var(--muted); font-size: 13px; }
-    .price-card {
-      background: linear-gradient(180deg, #1d1d22 0%, #121214 100%);
-      border: 1px solid var(--border);
-      border-radius: 28px;
-      padding: 28px;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.45);
-    }
-    .price-card .label { color: var(--muted); font-size: 13px; margin-bottom: 8px; }
-    .price-card .amount {
-      font-size: 48px; font-weight: 700; letter-spacing: -0.04em;
-      display: flex; align-items: baseline; gap: 8px;
-    }
-    .price-card .amount span { font-size: 16px; font-weight: 500; color: var(--muted); }
-    .price-card ul { list-style: none; margin: 22px 0; display: grid; gap: 10px; }
-    .price-card li {
-      display: flex; gap: 10px; align-items: flex-start;
-      color: var(--text); font-size: 14px;
-    }
-    .price-card li::before {
-      content: ""; width: 8px; height: 8px; margin-top: 6px; flex: none;
-      border-radius: 50%; background: var(--good);
-      box-shadow: 0 0 0 4px rgba(48,209,88,0.15);
-    }
-    .section { padding: 56px 0; border-top: 1px solid var(--border); }
-    .section h2 {
-      font-size: 28px; letter-spacing: -0.02em; margin-bottom: 12px;
-    }
-    .section .sub { color: var(--muted); margin-bottom: 28px; max-width: 40em; }
-    .grid {
-      display: grid; gap: 16px;
-      grid-template-columns: repeat(3, 1fr);
-    }
-    @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
-    .card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 22px;
-    }
-    .card h3 { font-size: 17px; margin-bottom: 8px; }
-    .card p { color: var(--muted); font-size: 14px; }
-    .cta-band {
-      margin: 24px 0 0;
-      padding: 28px;
-      border-radius: 24px;
-      background: radial-gradient(1200px 200px at 20% 0%, rgba(10,132,255,0.25), transparent),
-                  linear-gradient(180deg, #17171b, #101012);
-      border: 1px solid var(--border);
-      display: flex; flex-wrap: wrap; gap: 16px;
-      align-items: center; justify-content: space-between;
-    }
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 28px 0 48px;
-      color: var(--muted);
-      font-size: 13px;
-    }
-    .footer-row {
-      display: flex; flex-wrap: wrap; gap: 14px 24px;
-      justify-content: space-between; align-items: center;
-    }
-    .footer-links { display: flex; gap: 16px; flex-wrap: wrap; }
-    .footer-links a { color: var(--muted); }
-    .footer-links a:hover { color: var(--text); }
-    .notice {
-      margin-top: 14px; padding: 12px 14px; border-radius: 12px;
-      background: rgba(90,200,250,0.08); border: 1px solid rgba(90,200,250,0.18);
-      color: var(--muted); font-size: 13px;
-    }
-    .notice-warn {
-      margin-top: 14px; padding: 12px 14px; border-radius: 12px;
-      background: rgba(255,214,10,0.10); border: 1px solid rgba(255,214,10,0.28);
-      color: #f5e6a3; font-size: 13px; line-height: 1.5;
-    }
-    .notice-warn strong { color: #ffe566; font-weight: 650; }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>motomotos — the AI Dynamic Island for your Mac</title>
+<meta name="description" content="motomotos turns the MacBook notch into a live Dynamic Island for AI coding: agent quota, sessions, approvals, music and a cat. 10 days free, then $4.99 once.">
+<meta name="theme-color" content="#05070B">
+<meta property="og:title" content="motomotos — the AI Dynamic Island for your Mac">
+<meta property="og:description" content="Agent quota, sessions, approvals, music and a cat — in your MacBook notch.">
+<meta property="og:image" content="/assets/film/poster.jpg">
+<link rel="icon" href="/assets/favicon.png">
+<link rel="apple-touch-icon" href="/assets/icon-256.png">
+<link rel="preload" href="/assets/fonts/jb3.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/fonts/jb.css">
+<link rel="stylesheet" href="/css/site.css?v=202610201324">
 </head>
 <body>
-  <header>
-    <div class="wrap nav">
-      <a class="brand" href="index.html">
-        <img src="assets/icon-256.png" alt="motomotos icon" width="28" height="28" />
-        motomotos
-      </a>
-      <nav class="nav-links">
-        <a href="#features">Features</a>
-        <a href="#pricing">Pricing</a>
-        <a href="privacy.html">Privacy</a>
-        <a href="terms.html">Terms</a>
-        <a class="btn btn-primary" href="https://www.creem.io/payment/prod_zA7FU0N4xT94P9fGuDpF" rel="noopener" style="padding:8px 16px;font-size:13px;">Buy $4.99</a>
-      </nav>
-    </div>
-  </header>
+<div class="grain" aria-hidden="true"></div>
 
-  <main>
-    <section class="wrap hero">
-      <div>
-        <div class="eyebrow">macOS · Dynamic Island</div>
-        <h1>Your MacBook notch, finally useful.</h1>
-        <p class="lead">
-          motomotos turns the empty space around the notch into a live status island.
-          See AI coding sessions, quotas, media, system controls, and widgets at a glance —
-          approve prompts, jump back to a terminal, and keep a playful pet beside your work.
-        </p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" id="buy" href="https://www.creem.io/payment/prod_zA7FU0N4xT94P9fGuDpF" rel="noopener">Get lifetime license — $4.99</a>
-          <a class="btn btn-ghost" href="mailto:support@motomotos.com">Contact support</a>
-        </div>
-        <p class="fine">10-day free trial on Mac. One-time purchase unlocks future Mac updates. Requires macOS 13+ and a notched MacBook for the full island experience.</p>
+<!-- the site's menu bar: logo · notch · links, like a Mac -->
+<header class="menubar" id="menubar">
+  <a class="brand" href="#top" aria-label="motomotos">
+    <img src="/assets/icon-256.png" alt="" width="22" height="22"><span>motomotos</span>
+  </a>
+  <nav class="links" aria-label="Sections">
+    <a href="#quota" data-t="nav.quota">Quota</a>
+    <a href="#approve" data-t="nav.approve">Approve</a>
+    <a href="#widgets" data-t="nav.widgets">Widgets</a>
+    <a href="#cat" data-t="nav.cat">The cat</a>
+    <a href="#pricing" data-t="nav.pricing">Pricing</a>
+  </nav>
+  <div class="bar-right">
+    <button class="lang" id="lang" type="button" aria-label="Language"><span data-l="overseas">EN</span><span data-l="cn">中文</span></button>
+    <a class="pill pill-buy" href="#pricing" data-t="nav.buy">Buy · $4.99</a>
+  </div>
+</header>
+
+<!-- the notch: real app frames, follows the section you're in; hover opens it -->
+<div class="notch" id="notch" aria-label="motomotos island">
+  <div class="notch-shape" id="notchShape">
+    <img class="notch-mood" id="notchMood" alt="" draggable="false">
+    <div class="notch-menu" id="notchMenu">
+      <a href="#quota"><i style="--c:var(--g)"></i><span data-t="nav.quota">Quota</span></a>
+      <a href="#approve"><i style="--c:var(--y)"></i><span data-t="nav.approve">Approve</span></a>
+      <a href="#widgets"><i style="--c:var(--r)"></i><span data-t="nav.widgets">Widgets</span></a>
+      <a href="#cat"><i style="--c:var(--o)"></i><span data-t="nav.cat">The cat</span></a>
+      <a href="#pricing"><i style="--c:var(--g)"></i><span data-t="nav.pricing">Pricing</span></a>
+      <a href="#install"><i style="--c:var(--y)"></i><span data-t="nav.install">Install</span></a>
+      <a href="#" id="notchLang" class="notch-lang"><i style="--c:#fff"></i><span>中文</span></a>
+      <a href="#pricing" class="notch-buy" data-t="nav.buy">Buy · $4.99</a>
+    </div>
+  </div>
+</div>
+<canvas class="intro" id="intro" aria-hidden="true"></canvas>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <p class="eyebrow mono reveal" data-t="hero.eyebrow">motomotos · for MacBooks with a notch</p>
+    <h1 class="display" id="heroTitle">
+      <span class="line"><span class="w" data-t="hero.l1">Your notch,</span></span>
+      <span class="line"><span class="w" data-t="hero.l2">finally</span> <span class="w grad" data-t="hero.l3">awake.</span></span>
+    </h1>
+    <p class="lede reveal" data-t="hero.sub"></p>
+    <div class="ctas reveal">
+      <a class="btn btn-primary" href="#install"><span data-t="hero.cta1">Install · 10 days free</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v10m0 0l-4-4m4 4l4-4" /></svg></a>
+      <a class="btn btn-ghost" href="#pricing" data-t="hero.cta2">Buy once · $4.99</a>
+    </div>
+    <p class="meta mono reveal" data-t="hero.meta">macOS 13+ · Apple silicon · 6 languages</p>
+
+    <figure class="film" id="film">
+      <div class="film-frame" id="filmFrame">
+        <video id="filmVideo" src="/assets/film/launch.mp4" poster="/assets/film/poster.jpg" muted loop playsinline preload="metadata"></video>
+        <button class="sound" id="sound" type="button"><span class="eq"><i></i><i></i><i></i></span><span data-t="film.sound">Sound on</span></button>
       </div>
-      <aside class="price-card" id="pricing" aria-label="Pricing">
-        <div class="label">Lifetime license</div>
-        <div class="amount">$4.99 <span>USD · forever</span></div>
-        <ul>
-          <li>One-time payment — no subscription</li>
-          <li>Includes future Mac app updates</li>
-          <li>Activate on up to 3 Macs you own</li>
-          <li>Checkout via Creem (cards / Apple Pay where available)</li>
+      <figcaption class="mono"><span data-t="film.label">The 15-second film</span><span class="dot"></span><span data-t="film.note">Every pixel of the island is the real app.</span></figcaption>
+    </figure>
+  </section>
+
+  <!-- QUOTA -->
+  <section class="scene" id="quota" data-mood="busy" style="--len: 230vh">
+    <div class="sticky">
+      <div class="copy">
+        <p class="eyebrow mono" data-t="quota.eyebrow">01 — Quota</p>
+        <h2 class="h2" data-th="quota.h"></h2>
+        <p class="body" data-t="quota.p"></p>
+      </div>
+      <div class="stage quota-stage" id="quotaStage">
+        <div class="tri-glow" id="quotaGlow"></div>
+        <div class="q-island" id="qIsland"><img id="qPill" alt=""></div>
+        <img class="q-card" id="qCard" alt="motomotos quota card">
+        <svg class="q-lines" id="qLines" aria-hidden="true"></svg>
+        <div class="callout" data-i="0" style="--c:var(--g)"><b data-t="quota.c1n"></b><span data-t="quota.c1v"></span></div>
+        <div class="callout" data-i="1" style="--c:var(--y)"><b data-t="quota.c2n"></b><span data-t="quota.c2v"></span></div>
+        <div class="callout" data-i="2" style="--c:var(--r)"><b data-t="quota.c3n"></b><span data-t="quota.c3v"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPROVE -->
+  <section class="scene" id="approve" data-mood="waiting" style="--len: 320vh">
+    <div class="sticky">
+      <div class="copy">
+        <p class="eyebrow mono" data-t="approve.eyebrow">02 — Approve</p>
+        <h2 class="h2" data-th="approve.h"></h2>
+        <p class="body" data-t="approve.p"></p>
+        <ol class="steps mono" id="steps">
+          <li><span>01</span><span data-t="approve.step1"></span></li>
+          <li><span>02</span><span data-t="approve.step2"></span></li>
+          <li><span>03</span><span data-t="approve.step3"></span></li>
+        </ol>
+        <div class="progress"><i id="approveBar"></i></div>
+      </div>
+      <div class="stage seq-stage">
+        <div class="tri-glow soft" id="seqGlow"></div>
+        <canvas id="seq" aria-label="motomotos approval card"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- WIDGETS -->
+  <section class="block" id="widgets" data-mood="music">
+    <div class="block-head">
+      <p class="eyebrow mono reveal" data-t="widgets.eyebrow">03 — Widgets</p>
+      <h2 class="h2 reveal" data-th="widgets.h"></h2>
+    </div>
+    <div class="bento">
+      <article class="card c-term reveal"><div class="shot"><img data-src="ui/terminals.webp" alt=""></div><div class="card-text"><h3 data-t="w.term.h"></h3><p data-t="w.term.p"></p></div></article>
+      <article class="card c-grid reveal"><div class="shot"><img data-src="ui/calendar.webp" alt=""></div><div class="card-text"><h3 data-t="w.grid.h"></h3><p data-t="w.grid.p"></p></div></article>
+      <article class="card c-hud reveal"><div class="shot"><img data-src="ui/hud.webp" alt=""></div><div class="card-text"><h3 data-t="w.hud.h"></h3><p data-t="w.hud.p"></p></div></article>
+      <article class="card c-hover reveal"><div class="shot"><img data-src="ui/hover.webp" alt=""></div><div class="card-text"><h3 data-t="w.hover.h"></h3><p data-t="w.hover.p"></p></div></article>
+      <article class="card c-music reveal"><div class="shot music-shot" aria-hidden="true"><div class="eqbig"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="card-text"><h3 data-t="w.music.h"></h3><p data-t="w.music.p"></p></div></article>
+      <article class="card c-lang reveal"><div class="shot lang-shot" aria-hidden="true"><span class="hello mono" id="hello">Hello</span></div><div class="card-text"><h3 data-t="w.lang.h"></h3><p data-t="w.lang.p"></p></div></article>
+    </div>
+  </section>
+
+  <!-- CAT -->
+  <section class="block cat" id="cat" data-mood="cycle">
+    <div class="block-head">
+      <p class="eyebrow mono reveal" data-t="cat.eyebrow">04 — The cat</p>
+      <h2 class="h2 reveal" data-th="cat.h"></h2>
+      <p class="body reveal" data-t="cat.p"></p>
+    </div>
+    <div class="cat-wrap">
+      <ul class="moods" id="moods"></ul>
+      <div class="cat-stage reveal">
+        <div class="tri-glow soft"></div>
+        <img id="catBig" alt="">
+        <p class="mono cat-caption" id="catCaption"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="block pricing" id="pricing" data-mood="eating">
+    <div class="block-head center">
+      <p class="eyebrow mono reveal" data-t="price.eyebrow">05 — Pricing</p>
+      <h2 class="h2 reveal" data-th="price.h"></h2>
+    </div>
+    <div class="price-card reveal" id="priceCard">
+      <div class="ring" aria-hidden="true"></div>
+      <div class="price-inner">
+        <p class="mono trial" data-t="price.trial"></p>
+        <p class="amount"><span class="num mono" id="priceNum">$4.99</span><span class="unit" data-t="price.unit">once</span></p>
+        <ul class="checks">
+          <li data-t="price.b1"></li><li data-t="price.b2"></li><li data-t="price.b3"></li><li data-t="price.b4"></li>
         </ul>
-        <a class="btn btn-primary" style="width:100%" href="https://www.creem.io/payment/prod_zA7FU0N4xT94P9fGuDpF" rel="noopener">Buy with Creem — $4.99</a>
-        <p class="notice-warn" id="buy-status" role="status">
-          <strong>Buy opens Creem checkout in this tab</strong> (full-page navigation, not a popup).
-          While the store is under review, Creem may show that live payments are not enabled yet —
-          that still counts as a successful Buy click for reviewers.
-        </p>
-        <p class="notice" id="buy-note">
-          After payment, Creem emails your license key. Open motomotos → Settings → Account (or Activate),
-          paste the key, and unlock. Up to 3 Macs. Questions:
-          <a href="mailto:support@motomotos.com">support@motomotos.com</a>.
-        </p>
-      </aside>
-    </section>
-
-    <section class="section" id="features">
-      <div class="wrap">
-        <h2>Built for people who live in the terminal</h2>
-        <p class="sub">Keep AI coding tools, media, and everyday controls in the notch — without stealing focus when you don’t need them.</p>
-        <div class="grid">
-          <article class="card">
-            <h3>AI session island</h3>
-            <p>Watch coding agents and terminal sessions from the notch. Jump back to the right window, and handle approvals without digging through tabs.</p>
-          </article>
-          <article class="card">
-            <h3>Quota at a glance</h3>
-            <p>Shows real quota numbers when they can be read. If a tool can’t be read, motomotos says so instead of inventing a fake number.</p>
-          </article>
-          <article class="card">
-            <h3>Widget panel</h3>
-            <p>Expand into a customizable widget board — clocks, weather, media, volume/brightness controls, shortcuts, and more in S/M/L sizes.</p>
-          </article>
-          <article class="card">
-            <h3>Music & system HUD</h3>
-            <p>Now Playing for Apple Music, plus elastic volume and brightness feedback that feels at home on macOS.</p>
-          </article>
-          <article class="card">
-            <h3>Desktop pet</h3>
-            <p>A little companion that mirrors your work state — on the island, as a widget, or floating on the desktop.</p>
-          </article>
-          <article class="card">
-            <h3>Private by design</h3>
-            <p>Runs locally on your Mac. No keychain scraping, no credential harvesting. See the Privacy Policy for details.</p>
-          </article>
-        </div>
-
-        <div class="cta-band">
-          <div>
-            <strong style="font-size:18px;display:block;margin-bottom:4px;">Ready when you are</strong>
-            <span class="fine">$4.99 lifetime · support@motomotos.com · privacy &amp; terms linked below</span>
-          </div>
-          <a class="btn btn-primary" href="https://www.creem.io/payment/prod_zA7FU0N4xT94P9fGuDpF" rel="noopener">Buy lifetime — $4.99</a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="wrap footer-row">
-      <div>© 2026 motomotos. Independent Mac software.</div>
-      <div class="footer-links">
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="terms.html">Terms of Service</a>
-        <a href="mailto:support@motomotos.com">support@motomotos.com</a>
+        <a class="btn btn-primary wide" id="buyBtn" href="#" data-t="price.cta">Buy with Creem</a>
+        <p class="fine" data-t="price.note"></p>
+        <p class="fine dim" data-t="price.after"></p>
       </div>
     </div>
-  </footer>
+  </section>
+
+  <!-- INSTALL -->
+  <section class="block install" id="install" data-mood="focusing">
+    <div class="install-grid">
+      <div class="copy">
+        <p class="eyebrow mono reveal" data-t="install.eyebrow">06 — Install</p>
+        <h2 class="h2 reveal" data-th="install.h"></h2>
+        <p class="body reveal" data-t="install.p"></p>
+        <ol class="howto reveal">
+          <li data-t="install.s1"></li><li data-t="install.s2"></li><li data-t="install.s3"></li>
+        </ol>
+      </div>
+      <div class="term reveal" id="term">
+        <div class="term-bar"><i></i><i></i><i></i><span class="mono">Terminal — zsh</span></div>
+        <div class="term-body mono">
+          <div class="cmdline"><span class="ps">~ %</span> <span id="cmdTyped"></span><span class="caret"></span></div>
+          <div class="out" id="termOut"></div>
+        </div>
+        <button class="copy-btn mono" id="copyBtn" type="button"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="5" y="5" width="8" height="8" rx="2"/><path d="M3 10V4a1 1 0 0 1 1-1h6"/></svg><span data-t="install.copy">Copy</span></button>
+      </div>
+    </div>
+    <details class="what reveal">
+      <summary data-t="install.what"></summary>
+      <ul><li data-t="install.w1"></li><li data-t="install.w2"></li><li data-t="install.w3"></li><li data-t="install.w4"></li></ul>
+      <p class="mono fine"><span data-t="install.http"></span> <code id="httpCmd"></code></p>
+    </details>
+  </section>
+
+  <!-- FAQ -->
+  <section class="block faq" id="faq" data-mood="sleeping">
+    <div class="block-head">
+      <p class="eyebrow mono reveal" data-t="faq.eyebrow">07 — Questions</p>
+      <h2 class="h2 reveal" data-t="faq.h"></h2>
+    </div>
+    <div class="qa" id="qa"></div>
+  </section>
+</main>
+
+<footer class="foot" id="foot" data-mood="happy">
+  <div class="wordmark mono" id="wordmark" aria-label="motomotos">motomotos</div>
+  <div class="gradline"></div>
+  <div class="foot-row">
+    <p data-t="foot.tag"></p>
+    <nav class="mono">
+      <a href="/privacy.html" data-t="foot.privacy">Privacy</a>
+      <a href="/terms.html" data-t="foot.terms">Terms</a>
+      <a id="mail" href="mailto:support@motomotos.com"><span data-t="foot.support">Support</span> · support@motomotos.com</a>
+    </nav>
+  </div>
+  <p class="mono fine dim"><span>© 2026 motomotos</span> <span data-t="foot.company"></span> <span data-t="foot.beian"></span></p>
+</footer>
+
+<script type="module" src="/js/main.js?v=202610201324"></script>
 </body>
 </html>

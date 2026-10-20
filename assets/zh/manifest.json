@@ -1,0 +1,71 @@
+{
+ "mood.working": [
+  987,
+  123
+ ],
+ "mood.busy": [
+  987,
+  123
+ ],
+ "mood.waiting": [
+  987,
+  123
+ ],
+ "mood.fishing": [
+  987,
+  123
+ ],
+ "mood.music": [
+  987,
+  123
+ ],
+ "mood.sleeping": [
+  987,
+  123
+ ],
+ "mood.happy": [
+  945,
+  123
+ ],
+ "mood.error": [
+  945,
+  123
+ ],
+ "mood.eating": [
+  1021,
+  123
+ ],
+ "mood.message": [
+  987,
+  123
+ ],
+ "mood.focusing": [
+  1056,
+  123
+ ],
+ "seq": 108,
+ "ui.usage": [
+  1092,
+  1026
+ ],
+ "ui.calendar": [
+  1560,
+  1026
+ ],
+ "ui.terminals": [
+  1572,
+  759
+ ],
+ "ui.approval": [
+  1572,
+  1080
+ ],
+ "ui.hud": [
+  1065,
+  381
+ ],
+ "ui.hover": [
+  1485,
+  369
+ ]
+}
