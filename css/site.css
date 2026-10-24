@@ -382,3 +382,24 @@ p, li, .body, .lede, .fine, .callout span { text-wrap: pretty; }
   .display .w { transform: none; }
   html { scroll-behavior: auto; }
 }
+
+
+/* ---- WeChat pay modal ---- */
+.pay-modal { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; padding: 24px; }
+.pay-modal[hidden] { display: none !important; }
+.pay-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.72); backdrop-filter: blur(8px); }
+.pay-sheet { position: relative; width: min(400px, 100%); background: #0c1018; border: 1px solid rgba(255,255,255,.1); border-radius: 20px; padding: 28px 24px 22px; box-shadow: 0 30px 80px rgba(0,0,0,.55); }
+.pay-x { position: absolute; top: 12px; right: 14px; border: 0; background: transparent; color: rgba(255,255,255,.55); font-size: 22px; cursor: pointer; line-height: 1; }
+.pay-sheet h3 { margin: 0 0 8px; font-size: 1.15rem; }
+.pay-msg { margin: 0 0 14px; color: rgba(255,255,255,.7); font-size: .92rem; min-height: 1.2em; }
+.pay-qr-wrap { text-align: center; margin: 8px 0 12px; }
+.pay-qr { display: inline-grid; place-items: center; padding: 12px; background: #fff; border-radius: 12px; }
+.pay-qr img, .pay-qr table { display: block; width: 200px; height: 200px; }
+.pay-scan { margin: 12px 0 4px; color: rgba(255,255,255,.75); }
+.pay-amt { margin: 0; font-size: 1.25rem; color: #35E07A; }
+.pay-code-wrap { text-align: center; margin: 8px 0 12px; }
+.pay-code { font-size: 1.35rem; letter-spacing: .12em; margin: 10px 0 14px; color: #fff; word-break: break-all; }
+.pay-hint { margin: 8px 0 0; color: rgba(255,255,255,.45); }
+.pay-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 16px; }
+#buyBtn[aria-disabled="true"] { opacity: .45; pointer-events: none; }
+#buyBtn.pay-ready { cursor: pointer; }

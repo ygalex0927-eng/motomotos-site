@@ -1,12 +1,11 @@
 #!/bin/bash
 # Motomotos macOS installer — no Apple Developer ID / notarization required.
-# Usage:  curl -fsSL http://motomotos.com/install.sh | bash
-#    or:  curl -fsSL https://motomotos.com/install.sh | bash
+# Usage:  curl -fsSL https://motomotos.com/install.sh | bash
 set -euo pipefail
 export PATH="/usr/bin:/bin:/usr/sbin:/sbin"
 
-BASE_HTTP="http://motomotos.com"
 BASE_HTTPS="https://motomotos.com"
+BASE_HTTP="http://motomotos.com"
 TMP="$(mktemp -d /tmp/motomotos-install-XXXXXX)"
 DMG="$TMP/Motomotos.dmg"
 DEST="/Applications/Motomotos.app"
@@ -32,18 +31,18 @@ echo ""
 echo "1) Downloading Motomotos.dmg ..."
 echo "   正在下载安装包..."
 
-# Prefer HTTP first: some macOS curl/SecureTransport clients reset TLS to this host
+# HTTPS first; HTTP only as fallback if TLS fails on some networks
 OK=0
-if fetch "$BASE_HTTP/downloads/Motomotos.dmg" "$DMG"; then
+if fetch "$BASE_HTTPS/downloads/Motomotos.dmg" "$DMG"; then
   OK=1
-elif fetch "$BASE_HTTPS/downloads/Motomotos.dmg" "$DMG"; then
+elif fetch "$BASE_HTTP/downloads/Motomotos.dmg" "$DMG"; then
   OK=1
 fi
 if [ "$OK" != 1 ]; then
   echo "Download failed. Open a browser and save the DMG, then run:"
-  echo "  curl -fsSL http://motomotos.com/install.sh | bash"
+  echo "  curl -fsSL https://motomotos.com/install.sh | bash"
   echo "Or manual:"
-  echo "  open http://motomotos.com/downloads/Motomotos.dmg"
+  echo "  open https://motomotos.com/downloads/Motomotos.dmg"
   exit 1
 fi
 

@@ -1,4 +1,4 @@
-import { copyFor, currentRegion, saveRegion, CREEM_BUY, INSTALL_CMD, INSTALL_CMD_HTTP } from './i18n.js?v=202610201324';
+import { copyFor, currentRegion, saveRegion, refineRegion, CREEM_BUY, INSTALL_CMD, INSTALL_CMD_HTTP } from './i18n.js?v=202610241221';
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -28,8 +28,13 @@ function applyCopy() {
   $('#priceNum').textContent = T['price.amount'];
   $('.pill-buy').innerHTML = `<span class="long">${T['nav.buy'].replace(T['price.amount'], '').replace(/[·\s]+$/, '').replace(/^[·\s]+/, '')} </span>${T['price.amount']}`;
   const buy = $('#buyBtn');
-  if (region === 'cn') { buy.removeAttribute('href'); buy.setAttribute('aria-disabled', 'true'); }
-  else { buy.href = CREEM_BUY; buy.target = '_blank'; buy.rel = 'noopener'; buy.removeAttribute('aria-disabled'); }
+  if (region === 'cn') {
+    buy.removeAttribute('href'); buy.removeAttribute('target'); buy.removeAttribute('rel');
+    buy.setAttribute('aria-disabled', 'true'); buy.classList.remove('pay-ready');
+  } else {
+    buy.href = CREEM_BUY; buy.target = '_blank'; buy.rel = 'noopener';
+    buy.removeAttribute('aria-disabled'); buy.classList.remove('pay-ready');
+  }
   $$('img[data-src]').forEach((img) => { img.src = asset(img.dataset.src); });
   $('#qPill').src = asset('moods/busy.webp');
   $('#qCard').src = asset('ui/usage.webp');
@@ -344,6 +349,136 @@ $('#copyBtn').addEventListener('click', async () => {
   setTimeout(() => { label.textContent = T['install.copy']; b.classList.remove('done'); }, 1800);
 });
 
+
+// ---------------- CN WeChat Native pay ----------------
+const PAY_API = '/api/pay/wechat';
+let payPollTimer = null;
+let payOrderRef = null;
+
+function payEls() {
+  return {
+    modal: $('#payModal'),
+    msg: $('#payMsg'),
+    qrWrap: $('#payQrWrap'),
+    qr: $('#payQr'),
+    codeWrap: $('#payCodeWrap'),
+    code: $('#payCode'),
+    hint: $('#payHint'),
+    retry: $('#payRetry'),
+    copy: $('#payCopy'),
+  };
+}
+
+function renderQr(text) {
+  const box = $('#payQr');
+  box.innerHTML = '';
+  if (typeof qrcode !== 'function') {
+    const img = new Image();
+    img.alt = 'WeChat Pay QR';
+    img.width = 200; img.height = 200;
+    img.src = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(text);
+    box.append(img);
+    return;
+  }
+  const q = qrcode(0, 'M');
+  q.addData(text);
+  q.make();
+  box.innerHTML = q.createImgTag(5, 0);
+  const img = box.querySelector('img');
+  if (img) { img.width = 200; img.height = 200; img.alt = 'WeChat Pay QR'; }
+}
+
+function openPayModal() {
+  const e = payEls();
+  if (!e.modal) return;
+  e.modal.hidden = false;
+  e.modal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePayModal() {
+  const e = payEls();
+  if (!e.modal) return;
+  e.modal.hidden = true;
+  e.modal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+  if (payPollTimer) { clearInterval(payPollTimer); payPollTimer = null; }
+}
+
+function setPayState(kind, detail) {
+  const e = payEls();
+  const Tpay = T;
+  e.qrWrap.hidden = true;
+  e.codeWrap.hidden = true;
+  e.retry.hidden = true;
+  e.hint.textContent = Tpay['pay.hint'] || '';
+  if (kind === 'loading') {
+    e.msg.textContent = Tpay['pay.wait'] || '…';
+  } else if (kind === 'qr') {
+    e.msg.textContent = '';
+    e.qrWrap.hidden = false;
+    renderQr(detail);
+  } else if (kind === 'paid') {
+    e.msg.textContent = '';
+    e.codeWrap.hidden = false;
+    e.code.textContent = detail;
+  } else if (kind === 'config') {
+    e.msg.textContent = detail || Tpay['pay.config'];
+    e.retry.hidden = false;
+  } else {
+    e.msg.textContent = detail || Tpay['pay.error'];
+    e.retry.hidden = false;
+  }
+}
+
+async function startWechatPay() {
+  openPayModal();
+  setPayState('loading');
+  payOrderRef = null;
+  try {
+    const res = await fetch(PAY_API + '/create', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: '{}',
+    });
+    const data = await res.json().catch(() => ({}));
+    if (res.ok && data.code_url) {
+      payOrderRef = data.order_ref;
+      setPayState('qr', data.code_url);
+      if (payPollTimer) clearInterval(payPollTimer);
+      payPollTimer = setInterval(pollPayOrder, 2500);
+      return;
+    }
+    if (data.blocker === 'appid_missing' || data.blocker === 'not_configured') {
+      setPayState('config', data.hint_zh || T['pay.config']);
+      return;
+    }
+    setPayState('error', data.hint_zh || data.message || T['pay.error']);
+  } catch (err) {
+    setPayState('error', T['pay.error']);
+  }
+}
+
+async function pollPayOrder() {
+  if (!payOrderRef) return;
+  try {
+    const res = await fetch(PAY_API + '/order/' + encodeURIComponent(payOrderRef));
+    const data = await res.json().catch(() => ({}));
+    if (data.status === 'paid' && data.activation_code) {
+      if (payPollTimer) { clearInterval(payPollTimer); payPollTimer = null; }
+      setPayState('paid', data.activation_code);
+    }
+  } catch (_) { /* keep polling */ }
+}
+
+// WeChat Pay UI disabled (no AppID cert). CN CTA stays coming-soon until Alipay is live.
+const buyBtn = $('#buyBtn');
+buyBtn.addEventListener('click', (ev) => {
+  if (region !== 'cn') return;
+  ev.preventDefault();
+});
+
+
 // ---------------- scramble text ----------------
 const GLYPHS = '01#%@*+=-_<>/\\|$&';
 function scramble(el, word, step = 55, done) {
@@ -420,3 +555,10 @@ setInterval(() => { if (seq.near) approveFrame(progress($('#approve'))); }, 250)
 applyCopy();
 onScroll();
 document.fonts.ready.then(() => requestAnimationFrame(runIntro));
+// Sync paint used Accept-Language / session geo; refine with live IP when needed.
+refineRegion().then((r) => {
+  if (r === region) return;
+  region = r;
+  T = copyFor(region);
+  applyCopy();
+}).catch(() => {});
