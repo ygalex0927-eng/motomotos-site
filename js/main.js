@@ -1,4 +1,4 @@
-import { copyFor, currentRegion, saveRegion, refineRegion, CREEM_BUY, INSTALL_CMD, INSTALL_CMD_HTTP } from './i18n.js?v=202610241221';
+import { copyFor, currentRegion, saveRegion, refineRegion, CREEM_BUY, INSTALL_CMD, INSTALL_CMD_HTTP } from './i18n.js?v=202610241613';
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -43,7 +43,25 @@ function applyCopy() {
   setMood(currentMood, true);
   seq.load();
   termReset();
+  setDiy(diyMode);
 }
+
+// ---------------- DIY background ----------------
+let diyMode = 'still';
+function setDiy(mode) {
+  diyMode = mode;
+  const still = $('#diyStill'), gif = $('#diyGif');
+  if (!still || !gif) return;
+  $$('[data-diy]').forEach((b) => { const on = b.dataset.diy === mode; b.classList.toggle('on', on); b.setAttribute('aria-selected', on); });
+  if (mode === 'gif') {
+    const src = asset('bg/lava.mp4');
+    if (gif.dataset.src !== src) { gif.dataset.src = src; gif.poster = asset('bg/lava-poster.webp'); gif.src = src; }
+    gif.hidden = false; still.hidden = true; gif.play().catch(() => {});
+  } else {
+    gif.pause(); gif.hidden = true; still.hidden = false;
+  }
+}
+$$('[data-diy]').forEach((b) => b.addEventListener('click', () => setDiy(b.dataset.diy)));
 
 // ---------------- notch ----------------
 const notch = $('#notch'), notchMood = $('#notchMood'), notchShape = $('#notchShape');
