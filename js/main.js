@@ -1,4 +1,4 @@
-import { copyFor, currentRegion, saveRegion, refineRegion, CREEM_BUY, INSTALL_CMD, INSTALL_CMD_HTTP } from './i18n.js?v=202610250132';
+import { copyFor, currentRegion, saveRegion, refineRegion, CREEM_BUY, INSTALL_CMD, INSTALL_CMD_HTTP } from './i18n.js?v=202610251230';
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -29,8 +29,8 @@ function applyCopy() {
   $('.pill-buy').innerHTML = `<span class="long">${T['nav.buy'].replace(T['price.amount'], '').replace(/[·\s]+$/, '').replace(/^[·\s]+/, '')} </span>${T['price.amount']}`;
   const buy = $('#buyBtn');
   if (region === 'cn') {
-    buy.removeAttribute('href'); buy.removeAttribute('target'); buy.removeAttribute('rel');
-    buy.setAttribute('aria-disabled', 'true'); buy.classList.remove('pay-ready');
+    buy.href = '#'; buy.removeAttribute('target'); buy.removeAttribute('rel');
+    buy.removeAttribute('aria-disabled'); buy.classList.add('pay-ready');
   } else {
     buy.href = CREEM_BUY; buy.target = '_blank'; buy.rel = 'noopener';
     buy.removeAttribute('aria-disabled'); buy.classList.remove('pay-ready');
@@ -62,6 +62,31 @@ function setDiy(mode) {
   }
 }
 $$('[data-diy]').forEach((b) => b.addEventListener('click', () => setDiy(b.dataset.diy)));
+
+// ---------------- alipay (cn) ----------------
+let payBusy = false;
+document.addEventListener('click', async (e) => {
+  const b = e.target.closest('#buyBtn');
+  if (!b || region !== 'cn') return;
+  e.preventDefault();
+  if (payBusy) return;
+  payBusy = true;
+  const label = b.textContent;
+  b.textContent = '正在打开支付宝…';
+  try {
+    const r = await fetch('/api/pay/alipay/create', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' });
+    const d = await r.json();
+    if (!r.ok || !d.ok || !d.pay_url || !/^https:\/\/openapi\.alipay\.com\//.test(d.pay_url)) {
+      throw new Error(d.error || 'create_failed');
+    }
+    try { if (d.order_ref) sessionStorage.setItem('moto_alipay_ref', d.order_ref); } catch (_) {}
+    location.href = d.pay_url;
+  } catch (err) {
+    b.textContent = label;
+    payBusy = false;
+    alert('支付宝暂时打不开，请稍后再试。');
+  }
+});
 
 // ---------------- notch ----------------
 const notch = $('#notch'), notchMood = $('#notchMood'), notchShape = $('#notchShape');
@@ -489,12 +514,7 @@ async function pollPayOrder() {
   } catch (_) { /* keep polling */ }
 }
 
-// WeChat Pay UI disabled (no AppID cert). CN CTA stays coming-soon until Alipay is live.
-const buyBtn = $('#buyBtn');
-buyBtn.addEventListener('click', (ev) => {
-  if (region !== 'cn') return;
-  ev.preventDefault();
-});
+// CN Alipay handled above (alipay (cn)); overseas uses Creem href.
 
 
 // ---------------- scramble text ----------------
