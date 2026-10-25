@@ -1,4 +1,4 @@
-import { copyFor, currentRegion, saveRegion, refineRegion, CREEM_BUY, INSTALL_CMD, INSTALL_CMD_HTTP } from './i18n.js?v=202610241613';
+import { copyFor, currentRegion, saveRegion, refineRegion, CREEM_BUY, INSTALL_CMD, INSTALL_CMD_HTTP } from './i18n.js?v=202610250132';
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
