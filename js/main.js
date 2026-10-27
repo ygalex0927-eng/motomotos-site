@@ -1,4 +1,5 @@
-import { copyFor, currentRegion, saveRegion, refineRegion, CREEM_BUY, INSTALL_CMD, INSTALL_CMD_HTTP } from './i18n.js?v=202610251230';
+import { wireBuy } from './buy.js?v=202610271800';
+import { copyFor, currentRegion, saveRegion, refineRegion, CREEM_BUY, INSTALL_CMD, INSTALL_CMD_HTTP } from './i18n.js?v=202610271800';
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -63,30 +64,8 @@ function setDiy(mode) {
 }
 $$('[data-diy]').forEach((b) => b.addEventListener('click', () => setDiy(b.dataset.diy)));
 
-// ---------------- alipay (cn) ----------------
-let payBusy = false;
-document.addEventListener('click', async (e) => {
-  const b = e.target.closest('#buyBtn');
-  if (!b || region !== 'cn') return;
-  e.preventDefault();
-  if (payBusy) return;
-  payBusy = true;
-  const label = b.textContent;
-  b.textContent = '正在打开支付宝…';
-  try {
-    const r = await fetch('/api/pay/alipay/create', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' });
-    const d = await r.json();
-    if (!r.ok || !d.ok || !d.pay_url || !/^https:\/\/openapi\.alipay\.com\//.test(d.pay_url)) {
-      throw new Error(d.error || 'create_failed');
-    }
-    try { if (d.order_ref) sessionStorage.setItem('moto_alipay_ref', d.order_ref); } catch (_) {}
-    location.href = d.pay_url;
-  } catch (err) {
-    b.textContent = label;
-    payBusy = false;
-    alert('支付宝暂时打不开，请稍后再试。');
-  }
-});
+// ---------------- buy: in the app first (pays → this Mac unlocks), web checkout as fallback ----------------
+wireBuy({ region: () => region, creemUrl: CREEM_BUY });
 
 // ---------------- notch ----------------
 const notch = $('#notch'), notchMood = $('#notchMood'), notchShape = $('#notchShape');
@@ -514,7 +493,7 @@ async function pollPayOrder() {
   } catch (_) { /* keep polling */ }
 }
 
-// CN Alipay handled above (alipay (cn)); overseas uses Creem href.
+// Both regions: the buy button opens the buy sheet (js/buy.js).
 
 
 // ---------------- scramble text ----------------
