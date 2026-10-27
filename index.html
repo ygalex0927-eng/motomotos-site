@@ -1,253 +1,174 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>motomotos — the AI Dynamic Island for your Mac</title>
-<meta name="description" content="motomotos turns the MacBook notch into a live Dynamic Island for AI coding: agent quota, sessions, approvals, music and a cat. 10 days free, then $4.99 once.">
-<meta name="theme-color" content="#05070B">
-<meta property="og:title" content="motomotos — the AI Dynamic Island for your Mac">
-<meta property="og:description" content="Agent quota, sessions, approvals, music and a cat — in your MacBook notch.">
+<title>motomotos — Mac 刘海屏灵动岛 · AI 编程助手的状态岛</title>
+<meta name="description" content="motomotos 把 MacBook 的刘海变成灵动岛：Claude Code、Codex、Grok、DeepSeek 的状态和剩余额度，任务做完、出错、等你批准时在刘海上提醒。还有音乐、番茄钟、日历和一只小猫。">
+<meta name="keywords" content="灵动岛, Mac 灵动岛, 刘海屏, MacBook 刘海, Dynamic Island for Mac, macOS Dynamic Island, notch app, Claude Code, Codex, Grok, DeepSeek, AI 编程, 番茄钟, menu bar app">
+<meta name="theme-color" content="#0B0B0D">
+<meta property="og:title" content="motomotos — Dynamic Island for your Mac notch">
+<meta property="og:description" content="Your AI agents, working in the notch: status, quota left, alerts, music and a cat.">
 <meta property="og:image" content="/assets/film/poster.jpg">
 <link rel="icon" href="/assets/favicon.png">
 <link rel="apple-touch-icon" href="/assets/icon-256.png">
-<link rel="preload" href="/assets/fonts/jb3.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/fonts/jb.css">
-<link rel="stylesheet" href="/css/site.css?v=202610250132">
+<link rel="stylesheet" href="/css/v2.css?v=202610271400">
 </head>
 <body>
-<div class="grain" aria-hidden="true"></div>
+<div id="defs"></div>
 
-<!-- the site's menu bar: logo · notch · links, like a Mac -->
-<header class="menubar" id="menubar">
-  <a class="brand" href="#top" aria-label="motomotos">
-    <img src="/assets/icon-256.png" alt="" width="22" height="22"><span>motomotos</span>
-  </a>
-  <nav class="links" aria-label="Sections">
-    <a href="#quota" data-t="nav.quota">Quota</a>
-    <a href="#approve" data-t="nav.approve">Alerts</a>
-    <a href="#diy" data-t="nav.diy">Background</a>
-    <a href="#widgets" data-t="nav.widgets">Widgets</a>
-    <a href="#cat" data-t="nav.cat">The cat</a>
-    <a href="#pricing" data-t="nav.pricing">Pricing</a>
+<header class="bar">
+  <a class="brand" href="#top"><img src="/assets/icon-256.png" alt="" width="24" height="24"><span>motomotos</span></a>
+  <nav aria-label="Sections">
+    <a href="#agents" data-t="nav.agents"></a>
+    <a href="#moments" data-t="nav.moments"></a>
+    <a href="#widgets" data-t="nav.widgets"></a>
+    <a href="#cat" data-t="nav.cat"></a>
+    <a href="#pricing" data-t="nav.pricing"></a>
+    <a href="#install" data-t="nav.install"></a>
   </nav>
-  <div class="bar-right">
+  <div class="right">
     <button class="lang" id="lang" type="button" aria-label="Language"><span data-l="overseas">EN</span><span data-l="cn">中文</span></button>
-    <a class="pill pill-buy" href="#pricing" data-t="nav.buy">Buy · $4.99</a>
+    <a class="btn btn-primary btn-sm" id="buyPill" href="#pricing"></a>
   </div>
 </header>
 
-<!-- the notch: real app frames, follows the section you're in; hover opens it -->
-<div class="notch" id="notch" aria-label="motomotos island">
-  <div class="notch-shape" id="notchShape">
-    <img class="notch-mood" id="notchMood" alt="" draggable="false">
-    <div class="notch-menu" id="notchMenu">
-      <a href="#quota"><i style="--c:var(--g)"></i><span data-t="nav.quota">Quota</span></a>
-      <a href="#approve"><i style="--c:var(--y)"></i><span data-t="nav.approve">Approve</span></a>
-      <a href="#widgets"><i style="--c:var(--r)"></i><span data-t="nav.widgets">Widgets</span></a>
-      <a href="#cat"><i style="--c:var(--o)"></i><span data-t="nav.cat">The cat</span></a>
-      <a href="#pricing"><i style="--c:var(--g)"></i><span data-t="nav.pricing">Pricing</span></a>
-      <a href="#install"><i style="--c:var(--y)"></i><span data-t="nav.install">Install</span></a>
-      <a href="#" id="notchLang" class="notch-lang"><i style="--c:#fff"></i><span>中文</span></a>
-      <a href="#pricing" class="notch-buy" data-t="nav.buy">Buy · $4.99</a>
-    </div>
-  </div>
-</div>
-<canvas class="intro" id="intro" aria-hidden="true"></canvas>
-
 <main id="top">
-
-  <!-- HERO -->
-  <section class="hero" id="hero">
-    <p class="eyebrow mono reveal" data-t="hero.eyebrow">motomotos · for the notch on your Mac</p>
-    <h1 class="display" id="heroTitle">
-      <span class="line"><span class="w" data-t="hero.l1">Your notch,</span></span>
-      <span class="line"><span class="w" data-t="hero.l2">finally</span> <span class="w grad" data-t="hero.l3">awake.</span></span>
-    </h1>
-    <p class="lede reveal" data-t="hero.sub"></p>
-    <div class="ctas reveal">
-      <a class="btn btn-primary" href="#install"><span data-t="hero.cta1">Install · 10 days free</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v10m0 0l-4-4m4 4l4-4" /></svg></a>
-      <a class="btn btn-ghost" href="#pricing" data-t="hero.cta2">Buy once · $4.99</a>
-    </div>
-    <p class="meta mono reveal" data-t="hero.meta">macOS 13+ · Apple silicon · 6 languages</p>
-
-    <figure class="film" id="film">
-      <div class="film-frame" id="filmFrame">
-        <video id="filmVideo" src="/assets/film/launch.mp4" poster="/assets/film/poster.jpg" muted loop playsinline preload="metadata"></video>
-        <button class="sound" id="sound" type="button"><span class="eq"><i></i><i></i><i></i></span><span data-t="film.sound">Sound on</span></button>
+  <section class="hero" style="padding:56px 0 0">
+    <div class="blobs" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="hero-copy" style="padding-bottom:40px">
+      <p class="eyebrow" data-t="hero.eyebrow"></p>
+      <h1 class="display" data-th="hero.h"></h1>
+      <p class="lede" data-t="hero.p"></p>
+      <div class="ctas">
+        <a class="btn btn-primary" href="/downloads/Motomotos.dmg" data-dl><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v9m0 0L4.5 7.5M8 11l3.5-3.5M3 14h10"/></svg><span data-t="hero.cta1"></span></a>
+        <a class="btn btn-ghost" href="#pricing" id="heroBuy"></a>
       </div>
-      <figcaption class="mono"><span data-t="film.label">The 15-second film</span><span class="dot"></span><span data-t="film.note">Every pixel of the island is the real app.</span></figcaption>
-    </figure>
+      <p class="meta" data-t="hero.meta"></p>
+    </div>
+    <div class="screen">
+      <div class="menu"><span class="apple"></span><span>motomotos</span><span class="tick" data-t="stage.menu"></span></div>
+      <div class="stagebox" id="heroBox"><div class="stage" id="heroStage"></div></div>
+    </div>
+    <div class="chips" id="chips"></div>
+    <div style="height:96px"></div>
   </section>
 
-  <!-- QUOTA -->
-  <section class="scene" id="quota" data-mood="busy" style="--len: 230vh">
-    <div class="sticky">
-      <div class="copy">
-        <p class="eyebrow mono" data-t="quota.eyebrow">01 — Quota</p>
-        <h2 class="h2" data-th="quota.h"></h2>
-        <p class="body" data-t="quota.p"></p>
+  <section id="agents">
+    <div class="wrap agents">
+      <div>
+        <p class="eyebrow reveal" data-t="ag.eyebrow"></p>
+        <h2 class="h2 reveal" data-th="ag.h"></h2>
+        <p class="sub reveal" data-t="ag.p"></p>
+        <ul class="alist reveal">
+          <li style="--c:#D97757"><i></i>Claude Code</li>
+          <li style="--c:#10A37F"><i></i>Codex</li>
+          <li style="--c:#E6E6E6"><i></i>Grok</li>
+          <li style="--c:#4D6BFE"><i></i>DeepSeek</li>
+          <li style="--c:#8B5CF6"><i></i>Hermes</li>
+          <li style="--c:#2B7FFF"><i></i>WorkBuddy</li>
+        </ul>
+        <ul class="points reveal"><li data-th="ag.b1"></li><li data-th="ag.b2"></li><li data-th="ag.b3"></li></ul>
       </div>
-      <div class="stage quota-stage" id="quotaStage">
-        <div class="tri-glow" id="quotaGlow"></div>
-        <div class="q-island" id="qIsland"><img id="qPill" alt=""></div>
-        <img class="q-card" id="qCard" alt="motomotos quota card">
-        <svg class="q-lines" id="qLines" aria-hidden="true"></svg>
-        <div class="callout" data-i="0" style="--c:var(--g)"><b data-t="quota.c1n"></b><span data-t="quota.c1v"></span></div>
-        <div class="callout" data-i="1" style="--c:var(--y)"><b data-t="quota.c2n"></b><span data-t="quota.c2v"></span></div>
-        <div class="callout" data-i="2" style="--c:var(--r)"><b data-t="quota.c3n"></b><span data-t="quota.c3v"></span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- APPROVE -->
-  <section class="scene" id="approve" data-mood="waiting" style="--len: 320vh">
-    <div class="sticky">
-      <div class="copy">
-        <p class="eyebrow mono" data-t="approve.eyebrow">02 — Approve</p>
-        <h2 class="h2" data-th="approve.h"></h2>
-        <p class="body" data-t="approve.p"></p>
-        <ol class="steps mono" id="steps">
-          <li><span>01</span><span data-t="approve.step1"></span></li>
-          <li><span>02</span><span data-t="approve.step2"></span></li>
-          <li><span>03</span><span data-t="approve.step3"></span></li>
-        </ol>
-        <div class="progress"><i id="approveBar"></i></div>
-      </div>
-      <div class="stage seq-stage">
-        <div class="tri-glow soft" id="seqGlow"></div>
-        <canvas id="seq" aria-label="motomotos approval card"></canvas>
-      </div>
-    </div>
-  </section>
-
-  <!-- DIY BACKGROUND -->
-  <section class="block diy" id="diy" data-mood="music">
-    <div class="diy-grid">
-      <div class="copy">
-        <p class="eyebrow mono reveal" data-t="diy.eyebrow">03 — Background</p>
-        <h2 class="h2 reveal" data-th="diy.h"></h2>
-        <p class="body reveal" data-t="diy.p"></p>
-        <div class="diy-tabs reveal" role="tablist">
-          <button type="button" class="on" data-diy="still" role="tab" data-t="diy.still">Picture</button>
-          <button type="button" data-diy="gif" role="tab" data-t="diy.gif">GIF</button>
-        </div>
-        <p class="mono fine dim reveal" data-t="diy.formats"></p>
-      </div>
-      <figure class="diy-stage reveal">
-        <div class="tri-glow soft"></div>
-        <img id="diyStill" data-src="bg/sunset.webp" alt="">
-        <video id="diyGif" muted loop playsinline preload="none" hidden></video>
-        <figcaption class="mono fine dim" data-t="diy.note"></figcaption>
+      <figure class="cardshot reveal" style="margin:0">
+        <div class="halo"></div>
+        <img data-v2="cards/usage.webp" alt="" width="368" height="368">
+        <figcaption class="fine" style="text-align:center" data-t="ag.cap"></figcaption>
       </figure>
     </div>
   </section>
 
-  <!-- WIDGETS -->
-  <section class="block" id="widgets" data-mood="music">
-    <div class="block-head">
-      <p class="eyebrow mono reveal" data-t="widgets.eyebrow">03 — Widgets</p>
-      <h2 class="h2 reveal" data-th="widgets.h"></h2>
+  <section id="moments">
+    <div class="head center">
+      <p class="eyebrow reveal" data-t="mo.eyebrow"></p>
+      <h2 class="h2 reveal" data-th="mo.h"></h2>
+      <p class="sub reveal" data-t="mo.p"></p>
     </div>
-    <div class="bento">
-      <article class="card c-term reveal"><div class="shot"><img data-src="ui/terminals.webp" alt=""></div><div class="card-text"><h3 data-t="w.term.h"></h3><p data-t="w.term.p"></p></div></article>
-      <article class="card c-grid reveal"><div class="shot"><img data-src="ui/calendar.webp" alt=""></div><div class="card-text"><h3 data-t="w.grid.h"></h3><p data-t="w.grid.p"></p></div></article>
-      <article class="card c-hud reveal"><div class="shot"><img data-src="ui/hud.webp" alt=""></div><div class="card-text"><h3 data-t="w.hud.h"></h3><p data-t="w.hud.p"></p></div></article>
-      <article class="card c-hover reveal"><div class="shot"><img data-src="ui/hover.webp" alt=""></div><div class="card-text"><h3 data-t="w.hover.h"></h3><p data-t="w.hover.p"></p></div></article>
-      <article class="card c-music reveal"><div class="shot music-shot" aria-hidden="true"><div class="eqbig"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="card-text"><h3 data-t="w.music.h"></h3><p data-t="w.music.p"></p></div></article>
-      <article class="card c-lang reveal"><div class="shot lang-shot" aria-hidden="true"><span class="hello mono" id="hello">Hello</span></div><div class="card-text"><h3 data-t="w.lang.h"></h3><p data-t="w.lang.p"></p></div></article>
-    </div>
+    <div class="wrap moments" id="momentsGrid"></div>
   </section>
 
-  <!-- CAT -->
-  <section class="block cat" id="cat" data-mood="cycle">
-    <div class="block-head">
-      <p class="eyebrow mono reveal" data-t="cat.eyebrow">04 — The cat</p>
+  <section id="widgets">
+    <div class="head">
+      <p class="eyebrow reveal" data-t="wg.eyebrow"></p>
+      <h2 class="h2 reveal" data-th="wg.h"></h2>
+      <p class="sub reveal" data-t="wg.p"></p>
+    </div>
+    <div class="wrap panel" id="panel"></div>
+  </section>
+
+  <section id="cat">
+    <div class="head">
+      <p class="eyebrow reveal" data-t="cat.eyebrow"></p>
       <h2 class="h2 reveal" data-th="cat.h"></h2>
-      <p class="body reveal" data-t="cat.p"></p>
+      <p class="sub reveal" data-t="cat.p"></p>
     </div>
-    <div class="cat-wrap">
+    <div class="wrap cat">
       <ul class="moods" id="moods"></ul>
-      <div class="cat-stage reveal">
-        <div class="tri-glow soft"></div>
-        <img id="catBig" alt="">
-        <p class="mono cat-caption" id="catCaption"></p>
-      </div>
+      <div class="catstage reveal"><img id="catBig" alt=""><p id="catCaption"></p></div>
     </div>
   </section>
 
-  <!-- PRICING -->
-  <section class="block pricing" id="pricing" data-mood="eating">
-    <div class="block-head center">
-      <p class="eyebrow mono reveal" data-t="price.eyebrow">05 — Pricing</p>
+  <section id="pricing">
+    <div class="head center">
+      <p class="eyebrow reveal" data-t="price.eyebrow"></p>
       <h2 class="h2 reveal" data-th="price.h"></h2>
     </div>
-    <div class="price-card reveal" id="priceCard">
-      <div class="ring" aria-hidden="true"></div>
-      <div class="price-inner">
-        <p class="mono trial" data-t="price.trial"></p>
-        <p class="amount"><span class="num mono" id="priceNum">$4.99</span><span class="unit" data-t="price.unit">once</span></p>
-        <ul class="checks">
-          <li data-t="price.b1"></li><li data-t="price.b2"></li><li data-t="price.b3"></li><li data-t="price.b4"></li>
-        </ul>
-        <a class="btn btn-primary wide" id="buyBtn" href="#" data-t="price.cta">Buy with Creem</a>
-        <p class="fine" data-t="price.note"></p>
-        <p class="fine dim" data-t="price.after"></p>
-      </div>
+    <div class="price reveal">
+      <p class="trial" data-t="price.trial"></p>
+      <p class="amount"><span class="num" id="priceNum"></span><span class="unit" data-t="price.unit"></span></p>
+      <ul class="checks"><li data-t="price.b1"></li><li data-t="price.b2"></li><li data-t="price.b3"></li><li data-t="price.b4"></li></ul>
+      <a class="btn btn-primary wide" id="buyBtn" href="#"></a>
+      <p class="fine" data-t="price.note"></p>
+      <p class="fine" data-t="price.after"></p>
     </div>
   </section>
 
-  <!-- INSTALL -->
-  <section class="block install" id="install" data-mood="focusing">
-    <div class="install-grid">
-      <div class="copy">
-        <p class="eyebrow mono reveal" data-t="install.eyebrow">06 — Install</p>
-        <h2 class="h2 reveal" data-th="install.h"></h2>
-        <p class="body reveal" data-t="install.p"></p>
-        <ol class="howto reveal">
-          <li data-t="install.s1"></li><li data-t="install.s2"></li><li data-t="install.s3"></li>
-        </ol>
+  <section id="install">
+    <div class="wrap install">
+      <div>
+        <p class="eyebrow reveal" data-t="in.eyebrow"></p>
+        <h2 class="h2 reveal" data-th="in.h"></h2>
+        <p class="sub reveal" data-t="in.p"></p>
+        <ol class="steps reveal"><li data-t="in.s1"></li><li data-t="in.s2"></li><li data-t="in.s3"></li></ol>
       </div>
-      <div class="term reveal" id="term">
-        <div class="term-bar"><i></i><i></i><i></i><span class="mono">Terminal — zsh</span></div>
-        <div class="term-body mono">
-          <div class="cmdline"><span class="ps">~ %</span> <span id="cmdTyped"></span><span class="caret"></span></div>
-          <div class="out" id="termOut"></div>
+      <div class="reveal">
+        <a class="dl" href="/downloads/Motomotos.dmg" data-dl>
+          <img src="/assets/icon-256.png" alt="" width="56" height="56">
+          <div class="t"><b data-t="in.dl"></b><span data-t="in.dlmeta"></span></div>
+          <span class="btn btn-primary btn-sm" aria-hidden="true">↓</span>
+        </a>
+        <p class="fine" data-t="in.alt" style="margin-top:28px"></p>
+        <div class="term">
+          <div class="tb"><i></i><i></i><i></i><span>Terminal — zsh</span></div>
+          <pre id="cmd"></pre>
+          <button class="btn btn-ghost btn-sm copy" id="copyBtn" type="button" data-t="in.copy"></button>
         </div>
-        <button class="copy-btn mono" id="copyBtn" type="button"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="5" y="5" width="8" height="8" rx="2"/><path d="M3 10V4a1 1 0 0 1 1-1h6"/></svg><span data-t="install.copy">Copy</span></button>
+        <p class="fine" data-t="in.up"></p>
       </div>
     </div>
-    <details class="what reveal">
-      <summary data-t="install.what"></summary>
-      <ul><li data-t="install.w1"></li><li data-t="install.w2"></li><li data-t="install.w3"></li><li data-t="install.w4"></li></ul>
-      <p class="mono fine"><span data-t="install.http"></span> <code id="httpCmd"></code></p>
-    </details>
   </section>
 
-  <!-- FAQ -->
-  <section class="block faq" id="faq" data-mood="sleeping">
-    <div class="block-head">
-      <p class="eyebrow mono reveal" data-t="faq.eyebrow">07 — Questions</p>
-      <h2 class="h2 reveal" data-t="faq.h"></h2>
-    </div>
+  <section id="faq">
+    <div class="head center"><p class="eyebrow reveal" data-t="faq.eyebrow"></p><h2 class="h2 reveal" data-t="faq.h"></h2></div>
     <div class="qa" id="qa"></div>
   </section>
 </main>
 
-<footer class="foot" id="foot" data-mood="happy">
-  <div class="wordmark mono" id="wordmark" aria-label="motomotos">motomotos</div>
-  <div class="gradline"></div>
-  <div class="foot-row">
-    <p data-t="foot.tag"></p>
-    <nav class="mono">
-      <a href="/privacy.html" data-t="foot.privacy">Privacy</a>
-      <a href="/terms.html" data-t="foot.terms">Terms</a>
-      <a id="mail" href="mailto:support@motomotos.com"><span data-t="foot.support">Support</span> · support@motomotos.com</a>
+<footer>
+  <div class="wm">motomotos</div>
+  <div class="row">
+    <p style="margin:0" data-t="foot.tag"></p>
+    <nav>
+      <a href="/privacy.html" data-t="foot.privacy"></a>
+      <a href="/terms.html" data-t="foot.terms"></a>
+      <a href="https://github.com/ygalex0927-eng/motomotos-releases" target="_blank" rel="noopener" data-t="foot.github"></a>
+      <a href="mailto:support@motomotos.com"><span data-t="foot.support"></span> · support@motomotos.com</a>
     </nav>
   </div>
-  <p class="mono fine dim"><span>© 2026 motomotos</span> <span data-t="foot.company"></span> <span data-th="foot.beian"></span></p>
+  <p class="legal"><span>© 2026 motomotos</span> · <span data-t="foot.company"></span> · <span data-th="foot.beian"></span></p>
 </footer>
 
-<script type="module" src="/js/main.js?v=202610250132"></script>
+<script type="module" src="/js/v2.js?v=202610271400"></script>
 </body>
 </html>
