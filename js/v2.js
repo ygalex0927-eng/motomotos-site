@@ -1,6 +1,7 @@
 import { copyFor, currentRegion, saveRegion, refineRegion, CREEM_BUY, INSTALL_CMD } from './i18n.js?v=202610251230';
-import { copy2For } from './copy2.js?v=202610271400';
-import { Island, autoplay, ISLAND_DEFS } from './island.js?v=202610271400';
+import { copy2For } from './copy2.js?v=202610271500';
+import { Island, autoplay, ISLAND_DEFS } from './island.js?v=202610271500';
+import { buildWidgets, quotaCard } from './widgets.js?v=202610271500';
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -34,6 +35,7 @@ function applyCopy() {
   $('#cmd').textContent = '~ % ' + INSTALL_CMD;
   buildChips(); buildMoments(); buildPanel(); buildMoods(); buildFaq();
   hero.setLang(lang());
+  wireHero();
 }
 
 // ---------------- alipay (cn) — same flow as before ----------------
@@ -92,6 +94,28 @@ function fitStage() {
 }
 addEventListener('resize', fitStage);
 
+// Try it: rest the pointer on the island → the band; click → open; leave → it tucks itself away.
+let leaveTimer = null;
+const heroBody = () => $('#heroStage .isl-body');
+function wireHero() {
+  const body = heroBody();
+  if (!body || body.dataset.wired) return;
+  body.dataset.wired = '1';
+  body.addEventListener('mouseenter', () => {
+    clearTimeout(leaveTimer);
+    if (['idle', 'working', 'music', 'split'].includes(hero.s)) takeHero('band');
+  });
+  body.addEventListener('mouseleave', () => {
+    clearTimeout(leaveTimer);
+    if (hero.s === 'band' || hero.s === 'expanded') leaveTimer = setTimeout(() => takeHero(musicOn ? 'music' : 'idle', 0), hero.s === 'expanded' ? 700 : 250);
+    resumeTimer = setTimeout(startAuto, 8000);
+  });
+  body.addEventListener('click', () => {
+    clearTimeout(leaveTimer);
+    takeHero(hero.s === 'expanded' ? 'band' : 'expanded');
+  });
+}
+
 // ---------------- moments: one state per small stage ----------------
 const MOMENTS = ['music', 'split', 'done', 'waiting', 'error', 'focus'];
 let momentIslands = [];
@@ -123,11 +147,20 @@ function fitMoments() {
 }
 addEventListener('resize', fitMoments);
 
-// ---------------- widgets: real cards from the app ----------------
+// ---------------- toolbox: HTML widgets that work; the hero island answers them ----------------
+let musicOn = false;
+function takeHero(state, ms) {
+  if (stopAuto) { stopAuto(); stopAuto = null; }
+  clearTimeout(resumeTimer);
+  hero.go(state); markChip(state);
+  if (ms) resumeTimer = setTimeout(() => { hero.go(musicOn ? 'music' : 'idle'); resumeTimer = setTimeout(startAuto, 6000); }, ms);
+}
 function buildPanel() {
-  const cards = ['usage', 'pomodoro', 'clock', 'battery', 'tokenuse'];
-  $('#panel').innerHTML = cards.map((k) => `<article class="wcard reveal in"><div class="img"><img src="${V2(`cards/${k}.webp`)}" alt="${T[`wg.${k}.h`]}" width="368" height="368" loading="lazy"></div><div class="txt"><h3>${T[`wg.${k}.h`]}</h3><p>${T[`wg.${k}.p`]}</p></div></article>`).join('')
-    + `<article class="wcard text reveal in"><div><span class="big">${T['wg.more.big']}</span> <span style="font-size:20px;font-weight:600">${T['wg.more.h']}</span></div><p style="color:var(--ink2);margin:10px 0 0">${T['wg.more.p']}</p><div class="tags">${T['wg.tags'].map((t) => `<span>${t}</span>`).join('')}</div></article>`;
+  buildWidgets($('#panel'), T, lang(), {
+    onFocusDone: () => takeHero('focus', 4500),
+    onMusic: (on) => { musicOn = on; takeHero(on ? 'music' : 'idle', on ? 0 : 1200); if (on) resumeTimer = setTimeout(startAuto, 12000); },
+  });
+  $('#quotaDemo').innerHTML = quotaCard(T);
 }
 
 // ---------------- cat ----------------

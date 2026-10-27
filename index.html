@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>motomotos — Mac 刘海屏灵动岛 · AI 编程助手的状态岛</title>
+<title>motomotos — Mac 刘海屏灵动岛工具箱</title>
 <meta name="description" content="motomotos 把 MacBook 的刘海变成灵动岛：Claude Code、Codex、Grok、DeepSeek 的状态和剩余额度，任务做完、出错、等你批准时在刘海上提醒。还有音乐、番茄钟、日历和一只小猫。">
 <meta name="keywords" content="灵动岛, Mac 灵动岛, 刘海屏, MacBook 刘海, Dynamic Island for Mac, macOS Dynamic Island, notch app, Claude Code, Codex, Grok, DeepSeek, AI 编程, 番茄钟, menu bar app">
 <meta name="theme-color" content="#0B0B0D">
@@ -13,7 +13,7 @@
 <link rel="icon" href="/assets/favicon.png">
 <link rel="apple-touch-icon" href="/assets/icon-256.png">
 <link rel="stylesheet" href="/assets/fonts/jb.css">
-<link rel="stylesheet" href="/css/v2.css?v=202610271400">
+<link rel="stylesheet" href="/css/v2.css?v=202610271510">
 </head>
 <body>
 <div id="defs"></div>
@@ -21,9 +21,9 @@
 <header class="bar">
   <a class="brand" href="#top"><img src="/assets/icon-256.png" alt="" width="24" height="24"><span>motomotos</span></a>
   <nav aria-label="Sections">
-    <a href="#agents" data-t="nav.agents"></a>
-    <a href="#moments" data-t="nav.moments"></a>
     <a href="#widgets" data-t="nav.widgets"></a>
+    <a href="#moments" data-t="nav.moments"></a>
+    <a href="#agents" data-t="nav.agents"></a>
     <a href="#cat" data-t="nav.cat"></a>
     <a href="#pricing" data-t="nav.pricing"></a>
     <a href="#install" data-t="nav.install"></a>
@@ -52,7 +52,26 @@
       <div class="stagebox" id="heroBox"><div class="stage" id="heroStage"></div></div>
     </div>
     <div class="chips" id="chips"></div>
+    <p class="hint" data-t="hero.hint"></p>
     <div style="height:96px"></div>
+  </section>
+
+  <section id="widgets">
+    <div class="head">
+      <p class="eyebrow reveal" data-t="wg.eyebrow"></p>
+      <h2 class="h2 reveal" data-th="wg.h"></h2>
+      <p class="sub reveal" data-t="wg.p"></p>
+    </div>
+    <div class="wrap panel" id="panel"></div>
+  </section>
+
+  <section id="moments">
+    <div class="head center">
+      <p class="eyebrow reveal" data-t="mo.eyebrow"></p>
+      <h2 class="h2 reveal" data-th="mo.h"></h2>
+      <p class="sub reveal" data-t="mo.p"></p>
+    </div>
+    <div class="wrap moments" id="momentsGrid"></div>
   </section>
 
   <section id="agents">
@@ -71,30 +90,8 @@
         </ul>
         <ul class="points reveal"><li data-th="ag.b1"></li><li data-th="ag.b2"></li><li data-th="ag.b3"></li></ul>
       </div>
-      <figure class="cardshot reveal" style="margin:0">
-        <div class="halo"></div>
-        <img data-v2="cards/usage.webp" alt="" width="368" height="368">
-        <figcaption class="fine" style="text-align:center" data-t="ag.cap"></figcaption>
-      </figure>
+      <div class="cardshot quota-demo reveal"><div class="halo"></div><div id="quotaDemo"></div></div>
     </div>
-  </section>
-
-  <section id="moments">
-    <div class="head center">
-      <p class="eyebrow reveal" data-t="mo.eyebrow"></p>
-      <h2 class="h2 reveal" data-th="mo.h"></h2>
-      <p class="sub reveal" data-t="mo.p"></p>
-    </div>
-    <div class="wrap moments" id="momentsGrid"></div>
-  </section>
-
-  <section id="widgets">
-    <div class="head">
-      <p class="eyebrow reveal" data-t="wg.eyebrow"></p>
-      <h2 class="h2 reveal" data-th="wg.h"></h2>
-      <p class="sub reveal" data-t="wg.p"></p>
-    </div>
-    <div class="wrap panel" id="panel"></div>
   </section>
 
   <section id="cat">
@@ -169,6 +166,6 @@
   <p class="legal"><span>© 2026 motomotos</span> · <span data-t="foot.company"></span> · <span data-th="foot.beian"></span></p>
 </footer>
 
-<script type="module" src="/js/v2.js?v=202610271400"></script>
+<script type="module" src="/js/v2.js?v=202610271500"></script>
 </body>
 </html>
