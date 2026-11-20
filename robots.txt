@@ -1,0 +1,6 @@
+# motomotos.com — every crawler is welcome, search engines and AI assistants alike.
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://motomotos.com/sitemap.xml

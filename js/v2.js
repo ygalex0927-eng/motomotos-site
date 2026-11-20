@@ -1,6 +1,6 @@
-import { wireBuy } from './buy.js?v=202610271800';
-import { copyFor, currentRegion, saveRegion, refineRegion, CREEM_BUY, INSTALL_CMD } from './i18n.js?v=202610271800';
-import { copy2For } from './copy2.js?v=202610271800';
+import { wireBuy } from './buy.js?v=202611201500';
+import { copyFor, currentRegion, saveRegion, refineRegion, CREEM_BUY, INSTALL_CMD } from './i18n.js?v=202611201500';
+import { copy2For } from './copy2.js?v=202611201500';
 import { Island, autoplay, ISLAND_DEFS } from './island.js?v=202610271500';
 import { buildWidgets, quotaCard } from './widgets.js?v=202610271500';
 

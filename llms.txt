@@ -1,0 +1,67 @@
+# motomotos
+
+> motomotos is a Dynamic Island app for Mac. It turns the MacBook notch into a live island with 17 widgets (music, calendar, pomodoro timer, battery, app launcher and more) and shows what AI coding agents are doing — Claude Code, Codex, Grok, DeepSeek Harness, Hermes and WorkBuddy — how much usage they have left, and when they finish, fail or need approval. 10 days free, then $4.99 once.
+
+## Key facts
+
+- Platform: macOS 15 or later. Best on a MacBook with a notch; on Macs without a notch, or with the lid closed on an external display, the island sits at the top middle of the menu bar.
+- Price: free for 10 days with every feature, then a one-time $4.99 (no subscription), on up to 3 of your Macs. After the trial, paid widgets lock; the island, the clock and the cat keep working.
+- Usage limits: Claude Code (5-hour and 7-day windows, through an opt-in status line), Codex and Grok CLI, with reset times. Numbers that can't be read are shown as unavailable, never estimated.
+- Alerts: done, error and waiting for approval, with one click back to the right terminal. Any other tool can send an alert with `motomotos notify` or `motomotos run -- <command>`.
+- Widgets: music (Apple Music, Spotify; lyrics for NetEase Cloud Music), calendar, pomodoro, battery, launcher, weather, to-do, notes, stickies, photos, mirror, shortcuts, volume and brightness HUD, token usage, custom background (picture, GIF or video), and a cat with 11 moods.
+- Languages: English, Simplified Chinese, Traditional Chinese, Japanese, Korean, German.
+- Privacy: runs on the Mac; doesn't read the keychain, collect credentials or upload code or chats.
+- Download: https://motomotos.com/downloads/Motomotos.dmg — signed with a Developer ID and notarized by Apple. Current version 1.1.2 (released 2026-11-20).
+- Support: support@motomotos.com
+
+## Pages
+
+- [motomotos — home](https://motomotos.com/): features, pricing, download and FAQ
+- [Dynamic Island apps for Mac, compared](https://motomotos.com/compare/): motomotos, NotchNook, Boring Notch, Atoll, Alcove, Vibe Island and open-source agent notch apps
+- [How to see Claude Code usage limits in your MacBook notch](https://motomotos.com/guides/claude-code-usage-in-notch/)
+- [Get notified when Claude Code or Codex finishes, fails or needs approval](https://motomotos.com/guides/ai-agent-alerts-in-notch/)
+- [Changelog](https://motomotos.com/changelog/)
+
+## FAQ
+
+### What is motomotos?
+
+motomotos is a Dynamic Island app for Mac. It turns the MacBook notch into a black island that changes shape, like the Dynamic Island on iPhone. Hover for a glance, click to open a toolbox: music, calendar, a pomodoro timer, battery, your apps and more — 17 widgets — plus the status, quota left and approval alerts of AI coding agents such as Claude Code, Codex and Grok.
+
+### How much does it cost?
+
+10 days free with every feature. Then $4.99 once — no subscription, future Mac updates included, on up to three of your Macs.
+
+### Which Macs does it run on?
+
+Apple silicon Macs on macOS 15 or later. It looks best on a MacBook with a notch; with the lid closed on an external display, or on a Mac without a notch, the island sits at the top middle of the menu bar.
+
+### Which AI tools does it work with?
+
+Claude Code, Codex, Grok, DeepSeek Harness, Hermes and WorkBuddy — desktop apps and terminals, one switch each. For anything else, or a long build, the motomotos notify command lights the island too.
+
+### Where does the quota come from?
+
+Grok and Codex from their own records; Claude Code’s quota arrives once you have used claude in a terminal (the quota card has an “Open in Terminal” button). Unreadable means unreadable — never an estimate.
+
+### What happens to my data?
+
+motomotos runs on your Mac. It doesn’t scrape your keychain, collect credentials or upload your code or chats. The privacy policy has the details.
+
+### What happens after 10 days?
+
+The AI agent features (sessions, approvals, alerts, quota, tokens) and the other widgets lock until you buy. The island, the clock and the cat keep working.
+
+### How many Macs can I use?
+
+Up to three of your own Macs at once. On another Mac, open Restore Purchase in the app and enter the license key from your receipt email.
+
+### Is it notarized by Apple?
+
+Yes. Since 1.1.0, Motomotos.dmg from this site is signed with a Developer ID and notarized by Apple: open it, drag Motomotos into Applications, done — no “can’t be verified” warning.
+
+## Optional
+
+- [Releases on GitHub](https://github.com/ygalex0927-eng/motomotos-releases)
+- [Privacy policy](https://motomotos.com/privacy.html)
+- [Terms](https://motomotos.com/terms.html)

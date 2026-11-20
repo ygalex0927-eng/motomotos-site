@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Get notified in the Mac notch when Claude Code or Codex finishes, fails or needs approval</title>
+<meta name="description" content="Stop checking the terminal. motomotos lights up the MacBook notch when Claude Code, Codex, Grok and other AI agents finish, fail or wait for approval, and one click takes you back. Any other tool can send an alert with motomotos notify.">
+<link rel="canonical" href="https://motomotos.com/guides/ai-agent-alerts-in-notch/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="motomotos">
+<meta property="og:title" content="Get notified in the Mac notch when Claude Code or Codex finishes, fails or needs approval">
+<meta property="og:description" content="Stop checking the terminal. motomotos lights up the MacBook notch when Claude Code, Codex, Grok and other AI agents finish, fail or wait for approval, and one click takes you back. Any other tool can send an alert with motomotos notify.">
+<meta property="og:url" content="https://motomotos.com/guides/ai-agent-alerts-in-notch/">
+<meta property="og:image" content="https://motomotos.com/assets/film/poster.jpg">
+<meta property="og:image:width" content="1920">
+<meta property="og:image:height" content="1080">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Get notified in the Mac notch when Claude Code or Codex finishes, fails or needs approval">
+<meta name="twitter:description" content="Stop checking the terminal. motomotos lights up the MacBook notch when Claude Code, Codex, Grok and other AI agents finish, fail or wait for approval, and one click takes you back. Any other tool can send an alert with motomotos notify.">
+<meta name="twitter:image" content="https://motomotos.com/assets/film/poster.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://motomotos.com/#org","name":"motomotos","url":"https://motomotos.com/","logo":"https://motomotos.com/assets/icon-256.png","email":"support@motomotos.com","sameAs":["https://github.com/ygalex0927-eng/motomotos-releases"]},{"@type":"TechArticle","@id":"https://motomotos.com/guides/ai-agent-alerts-in-notch/#article","headline":"Get notified when Claude Code or Codex finishes, fails or needs approval","description":"Stop checking the terminal. motomotos lights up the MacBook notch when Claude Code, Codex, Grok and other AI agents finish, fail or wait for approval, and one click takes you back. Any other tool can send an alert with motomotos notify.","url":"https://motomotos.com/guides/ai-agent-alerts-in-notch/","mainEntityOfPage":"https://motomotos.com/guides/ai-agent-alerts-in-notch/","image":"https://motomotos.com/assets/film/poster.jpg","datePublished":"2026-11-19","dateModified":"2026-11-19","inLanguage":"en","author":{"@id":"https://motomotos.com/#org"},"publisher":{"@id":"https://motomotos.com/#org"},"about":{"@id":"https://motomotos.com/#app"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://motomotos.com/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://motomotos.com/guides/ai-agent-alerts-in-notch/"},{"@type":"ListItem","position":3,"name":"AI agent alerts in the notch","item":"https://motomotos.com/guides/ai-agent-alerts-in-notch/"}]}]}</script>
+<meta name="theme-color" content="#0B0B0D">
+<link rel="icon" href="/assets/favicon.png">
+<link rel="apple-touch-icon" href="/assets/icon-256.png">
+<link rel="stylesheet" href="/assets/fonts/jb.css">
+<link rel="stylesheet" href="/css/v2.css?v=202611201500">
+<link rel="stylesheet" href="/css/page.css?v=202611201500">
+</head>
+<body>
+<header class="bar">
+  <a class="brand" href="/"><img src="/assets/icon-256.png" alt="" width="24" height="24"><span>motomotos</span></a>
+  <nav class="navlinks" aria-label="Site"><a href="/compare/">Compare</a><a href="/guides/claude-code-usage-in-notch/" class="on" aria-current="page">Guides</a><a href="/changelog/">Changelog</a></nav>
+  <div class="right"><a class="btn btn-primary btn-sm" href="/downloads/Motomotos.dmg">Download</a></div>
+</header>
+<main class="doc">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span>AI agent alerts in the notch</span></nav>
+<article>
+<h1>Get notified when Claude Code or Codex finishes, fails or needs approval</h1>
+<p class="lead">Long agent runs finish while you’re in another window. motomotos lights up your MacBook’s notch the moment an agent is done, fails or waits for you — and one click takes you back to the right terminal.</p>
+<p class="updated">Updated <time datetime="2026-11-19">November 19, 2026</time></p>
+<h2>Agents it follows</h2>
+<p>Claude Code, Codex (the CLI and the desktop app), Grok CLI, DeepSeek Harness, Hermes and WorkBuddy. In <strong>Settings › Terminals &amp; Approval</strong>, each agent has one switch that covers both its desktop app and its terminal command. Every open session gets a row with its own icon; click a row to jump back to its terminal.</p>
+
+<h2>Set up</h2>
+<ol>
+  <li><a href="/downloads/Motomotos.dmg">Install motomotos</a> and open it. The welcome steps find the agents on your Mac and send a test alert.</li>
+  <li><strong>Claude Code:</strong> in Settings › Terminals &amp; Approval › <strong>Claude Code hooks</strong>, click <strong>Install</strong>. It’s optional — without it you still see Claude Code working; with it, the notch also tells you when Claude Code waits for your approval. motomotos only adds its own entries to the hooks in <code>~/.claude/settings.json</code> (backing the file up first) and leaves your other settings alone. Restart open Claude Code sessions afterwards. <strong>Uninstall</strong> removes only those entries.</li>
+  <li><strong>Grok CLI:</strong> install the Grok CLI hook on the same page.</li>
+  <li><strong>Codex and Hermes</strong> need nothing else — turn on their switches.</li>
+</ol>
+
+<h2>What you see</h2>
+<div class="tbl"><table>
+  <tr><th>Done</th><td>A tick draws itself, sparks burst out, the cat is happy.</td></tr>
+  <tr><th>Error</th><td>A red alert and a short shake of the head.</td></tr>
+  <tr><th>Waiting for you</th><td>The island grows into a card with the exact command, with amber light underneath.</td></tr>
+</table></div>
+<p>Each kind of alert has its own sound, and you can turn off the pop-up banner in Settings › Appearance while keeping the cat and the sound.</p>
+
+<h2>Approve in the terminal or in the notch</h2>
+<ul>
+  <li><strong>Follow terminal</strong> (default): anything your terminal asks about is approved in the terminal. The island reminds you and jumps back to it.</li>
+  <li><strong>Approve in the notch</strong>: sessions running with full access wait in the notch until you say OK.</li>
+</ul>
+
+<h2>Alerts from any other tool</h2>
+<p>Gemini CLI, Aider, a long build, a backup script: the <code>motomotos</code> command lights up the island the same way.</p>
+<pre><code># send one
+motomotos notify --title "Build done" --status done --app "Gemini CLI"
+
+# wrap a command: done or error by exit code, with the time it took
+motomotos run -- make test
+
+# from Shortcuts, Raycast or a browser extension
+open "motomotos://notify?title=Done&amp;status=done&amp;app=Raycast"</code></pre>
+<p><code>--status</code> is <code>done</code>, <code>error</code>, <code>waiting</code> or <code>info</code>. The link only shows an alert; it never runs anything. If motomotos isn’t running, no alert is sent and nothing breaks; <code>run</code> always exits with your command’s own exit code.</p>
+<div class="cta"><a class="btn btn-primary" href="/downloads/Motomotos.dmg">Download motomotos · 10 days free</a><p class="fine">$4.99 once after the trial · macOS 15 or later</p></div>
+</article>
+<div class="rel"><h2>Related</h2><ul><li><a href="/guides/claude-code-usage-in-notch/">How to see Claude Code usage limits in your MacBook notch</a></li><li><a href="/compare/">Dynamic Island apps for Mac, compared</a></li></ul></div>
+</main>
+<footer>
+  <div class="wm">motomotos</div>
+  <nav class="more" aria-label="Guides">
+    <a href="/compare/">Dynamic Island apps for Mac, compared</a>
+    <a href="/guides/claude-code-usage-in-notch/">How to see Claude Code usage in the notch</a>
+    <a href="/guides/ai-agent-alerts-in-notch/">Get notified when Claude Code or Codex finishes</a>
+    <a href="/changelog/">Changelog</a>
+  </nav>
+  <div class="row">
+    <p style="margin:0">The AI Dynamic Island for your Mac notch.</p>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+      <a href="https://github.com/ygalex0927-eng/motomotos-releases" target="_blank" rel="noopener">GitHub</a>
+      <a href="mailto:support@motomotos.com">Support · support@motomotos.com</a>
+    </nav>
+  </div>
+  <p class="legal"><span>© 2026 motomotos</span> · <span><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">粤ICP备2026004847号-3</a></span></p>
+</footer>
+</body>
+</html>

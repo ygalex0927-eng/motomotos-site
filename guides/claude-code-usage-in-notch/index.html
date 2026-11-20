@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>How to see Claude Code usage limits (5-hour and weekly) in your MacBook notch</title>
+<meta name="description" content="Show Claude Code’s 5-hour and 7-day usage, with reset times, in the Mac notch. A step-by-step guide with motomotos: connect the Claude Code status line once and the numbers stay in the notch.">
+<link rel="canonical" href="https://motomotos.com/guides/claude-code-usage-in-notch/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="motomotos">
+<meta property="og:title" content="How to see Claude Code usage limits (5-hour and weekly) in your MacBook notch">
+<meta property="og:description" content="Show Claude Code’s 5-hour and 7-day usage, with reset times, in the Mac notch. A step-by-step guide with motomotos: connect the Claude Code status line once and the numbers stay in the notch.">
+<meta property="og:url" content="https://motomotos.com/guides/claude-code-usage-in-notch/">
+<meta property="og:image" content="https://motomotos.com/assets/film/poster.jpg">
+<meta property="og:image:width" content="1920">
+<meta property="og:image:height" content="1080">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How to see Claude Code usage limits (5-hour and weekly) in your MacBook notch">
+<meta name="twitter:description" content="Show Claude Code’s 5-hour and 7-day usage, with reset times, in the Mac notch. A step-by-step guide with motomotos: connect the Claude Code status line once and the numbers stay in the notch.">
+<meta name="twitter:image" content="https://motomotos.com/assets/film/poster.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://motomotos.com/#org","name":"motomotos","url":"https://motomotos.com/","logo":"https://motomotos.com/assets/icon-256.png","email":"support@motomotos.com","sameAs":["https://github.com/ygalex0927-eng/motomotos-releases"]},{"@type":"TechArticle","@id":"https://motomotos.com/guides/claude-code-usage-in-notch/#article","headline":"How to see Claude Code usage limits in your MacBook notch","description":"Show Claude Code’s 5-hour and 7-day usage, with reset times, in the Mac notch. A step-by-step guide with motomotos: connect the Claude Code status line once and the numbers stay in the notch.","url":"https://motomotos.com/guides/claude-code-usage-in-notch/","mainEntityOfPage":"https://motomotos.com/guides/claude-code-usage-in-notch/","image":"https://motomotos.com/assets/film/poster.jpg","datePublished":"2026-11-19","dateModified":"2026-11-19","inLanguage":"en","author":{"@id":"https://motomotos.com/#org"},"publisher":{"@id":"https://motomotos.com/#org"},"about":{"@id":"https://motomotos.com/#app"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://motomotos.com/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://motomotos.com/guides/claude-code-usage-in-notch/"},{"@type":"ListItem","position":3,"name":"Claude Code usage in the notch","item":"https://motomotos.com/guides/claude-code-usage-in-notch/"}]}]}</script>
+<meta name="theme-color" content="#0B0B0D">
+<link rel="icon" href="/assets/favicon.png">
+<link rel="apple-touch-icon" href="/assets/icon-256.png">
+<link rel="stylesheet" href="/assets/fonts/jb.css">
+<link rel="stylesheet" href="/css/v2.css?v=202611201500">
+<link rel="stylesheet" href="/css/page.css?v=202611201500">
+</head>
+<body>
+<header class="bar">
+  <a class="brand" href="/"><img src="/assets/icon-256.png" alt="" width="24" height="24"><span>motomotos</span></a>
+  <nav class="navlinks" aria-label="Site"><a href="/compare/">Compare</a><a href="/guides/claude-code-usage-in-notch/" class="on" aria-current="page">Guides</a><a href="/changelog/">Changelog</a></nav>
+  <div class="right"><a class="btn btn-primary btn-sm" href="/downloads/Motomotos.dmg">Download</a></div>
+</header>
+<main class="doc">
+<nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span>Claude Code usage in the notch</span></nav>
+<article>
+<h1>How to see Claude Code usage limits in your MacBook notch</h1>
+<p class="lead">Claude Code’s subscription limits come in two windows: 5 hours and 7 days. motomotos puts both percentages and their reset times in your Mac’s notch, so you can check how much is left without leaving what you’re doing.</p>
+<p class="updated">Updated <time datetime="2026-11-19">November 19, 2026</time></p>
+<h2>What you need</h2>
+<ul>
+  <li>A Mac on macOS 15 or later.</li>
+  <li><a href="/downloads/Motomotos.dmg">motomotos</a> — free for 10 days.</li>
+  <li>Claude Code installed and signed in with a Claude subscription. The 5-hour and 7-day windows are subscription limits.</li>
+</ul>
+
+<h2>Steps</h2>
+<ol>
+  <li><strong>Install motomotos.</strong> Open Motomotos.dmg, drag Motomotos into Applications and open it.</li>
+  <li><strong>Open settings.</strong> Click the motomotos icon in the menu bar and choose <strong>Settings…</strong></li>
+  <li><strong>Check Claude Code.</strong> Go to <strong>AI Tools</strong> and check Claude Code. You can check several tools; the island shows every one you check, and the closed island shows the first one’s percentage.</li>
+  <li><strong>Connect Claude Code.</strong> Under <strong>Checked quotas</strong>, click <strong>Connect Claude Code</strong>. motomotos adds a <code>statusLine</code> entry to <code>~/.claude/settings.json</code>, backing the file up first. If you already use another status line, motomotos leaves it alone and doesn’t connect.</li>
+  <li><strong>Use Claude Code once.</strong> Run <code>claude</code> in a terminal — the quota card’s <strong>Open in Terminal</strong> button does it for you. Claude Code only hands its limits to the status line during a session, so the numbers appear after that.</li>
+  <li><strong>Look at the notch.</strong> Rest the pointer on the notch for a glance, or click to open it. The AI quota card shows the 5-hour and 7-day percentages and when each window resets.</li>
+</ol>
+
+<h2>How it works</h2>
+<p>Claude Code passes its <code>rate_limits</code> — how much of the 5-hour and 7-day windows you have used — only to the status line command. motomotos’s status line command shows the model and both percentages in Claude Code’s status line, and copies those two numbers to a file on your Mac. motomotos reads only that file. It doesn’t read, store or forward any keys or tokens.</p>
+
+<h2>Undo it</h2>
+<p>Settings › AI Tools › <strong>Disconnect</strong> removes motomotos’s status line from <code>~/.claude/settings.json</code> and nothing else.</p>
+
+<h2>If something looks wrong</h2>
+<ul>
+  <li><strong>“Connect Claude Code” is greyed out.</strong> Claude Code isn’t installed, or another status line is already set in <code>~/.claude/settings.json</code>.</li>
+  <li><strong>No numbers yet.</strong> Use <code>claude</code> in a terminal once after connecting.</li>
+  <li><strong>“Read, but the data is a bit old.”</strong> The last numbers are from a while ago. They refresh the next time you use Claude Code.</li>
+</ul>
+
+<h2>Codex and Grok, too</h2>
+<p>Check Codex or Grok CLI in AI Tools as well. Their usage comes from the tools’ own data, with no extra setup. Whatever can’t be read shows as unavailable — motomotos never makes up a number.</p>
+<div class="cta"><a class="btn btn-primary" href="/downloads/Motomotos.dmg">Download motomotos · 10 days free</a><p class="fine">$4.99 once after the trial · macOS 15 or later</p></div>
+</article>
+<div class="rel"><h2>Related</h2><ul><li><a href="/guides/ai-agent-alerts-in-notch/">Get notified when Claude Code or Codex finishes or needs approval</a></li><li><a href="/compare/">Dynamic Island apps for Mac, compared</a></li></ul></div>
+</main>
+<footer>
+  <div class="wm">motomotos</div>
+  <nav class="more" aria-label="Guides">
+    <a href="/compare/">Dynamic Island apps for Mac, compared</a>
+    <a href="/guides/claude-code-usage-in-notch/">How to see Claude Code usage in the notch</a>
+    <a href="/guides/ai-agent-alerts-in-notch/">Get notified when Claude Code or Codex finishes</a>
+    <a href="/changelog/">Changelog</a>
+  </nav>
+  <div class="row">
+    <p style="margin:0">The AI Dynamic Island for your Mac notch.</p>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+      <a href="https://github.com/ygalex0927-eng/motomotos-releases" target="_blank" rel="noopener">GitHub</a>
+      <a href="mailto:support@motomotos.com">Support · support@motomotos.com</a>
+    </nav>
+  </div>
+  <p class="legal"><span>© 2026 motomotos</span> · <span><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">粤ICP备2026004847号-3</a></span></p>
+</footer>
+</body>
+</html>

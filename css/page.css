@@ -1,0 +1,50 @@
+/* Guides, comparison and changelog pages. Loaded after v2.css: same bar, colours, buttons and footer. */
+.bar .navlinks { display: flex; gap: 24px; margin-left: 12px; font-size: 14px; color: var(--ink2); }
+.bar .navlinks a:hover, .bar .navlinks a.on { color: var(--ink); }
+@media (max-width: 980px) { .bar .navlinks { display: none; } }
+
+.doc { position: relative; max-width: 780px; margin: 0 auto; padding: 120px var(--pad) 96px; box-sizing: content-box; }
+.crumbs { font: 12px/1.4 var(--mono); color: var(--ink3); margin: 0 0 26px; display: flex; flex-wrap: wrap; gap: 8px; }
+.crumbs a { color: var(--ink3); }
+.crumbs a:hover { color: var(--ink); }
+.doc h1 { margin: 0; font-size: clamp(30px, 4.4vw, 46px); line-height: 1.15; letter-spacing: -.03em; font-weight: 700; }
+.doc .lead { margin: 20px 0 0; font-size: 18px; color: var(--ink2); }
+.doc .updated { margin: 16px 0 0; font: 12px var(--mono); color: var(--ink3); }
+.doc h2 { margin: 56px 0 0; font-size: 26px; line-height: 1.25; letter-spacing: -.02em; }
+.doc h3 { margin: 32px 0 0; font-size: 19px; line-height: 1.35; }
+.doc p, .doc li { color: rgba(244, 242, 238, .82); font-size: 16.5px; line-height: 1.75; }
+.doc p { margin: 14px 0 0; }
+.doc ul, .doc ol { margin: 14px 0 0; padding-left: 22px; }
+.doc li { margin: 8px 0 0; }
+.doc li::marker { color: var(--ink3); }
+.doc strong { color: var(--ink); }
+.doc a { color: #9CC8FF; border-bottom: 1px solid rgba(156, 200, 255, .35); }
+.doc a:hover { border-color: #9CC8FF; }
+.doc a.btn { color: #0B0B0D; border: 0; }
+.doc a.btn-ghost { color: var(--ink); }
+.doc .crumbs a { color: var(--ink3); border: 0; }
+.doc .crumbs a:hover { color: var(--ink); }
+.doc code { font-family: var(--mono); font-size: .88em; padding: 2px 6px; border-radius: 6px; background: rgba(255, 255, 255, .07); color: var(--ink); }
+.doc pre { margin: 16px 0 0; padding: 16px 18px; border-radius: 14px; background: #121215; box-shadow: inset 0 0 0 1px var(--line); overflow-x: auto; font: 13.5px/1.6 var(--mono); color: var(--ink); }
+.doc pre code { padding: 0; background: none; font-size: inherit; }
+.doc .tldr { margin: 32px 0 0; padding: 20px 22px; border-radius: 18px; background: rgba(255, 255, 255, .04); box-shadow: inset 0 0 0 1px var(--line); }
+.doc .tldr h2 { margin: 0; font-size: 15px; font: 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink3); }
+.doc .tldr ul { margin-top: 10px; }
+.doc .note { margin: 28px 0 0; padding: 14px 18px; border-left: 2px solid rgba(255, 255, 255, .2); color: var(--ink2); font-size: 14.5px; }
+.doc .tbl { margin: 18px 0 0; overflow-x: auto; border-radius: 14px; box-shadow: inset 0 0 0 1px var(--line); }
+.doc table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+.doc th, .doc td { padding: 12px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
+.doc th { color: var(--ink3); font-weight: 600; white-space: nowrap; }
+.doc td { color: rgba(244, 242, 238, .82); }
+.doc tr:last-child th, .doc tr:last-child td { border-bottom: 0; }
+.doc .rel { margin: 64px 0 0; padding-top: 28px; border-top: 1px solid var(--line); }
+.doc .rel h2 { margin: 0; font-size: 18px; }
+.doc .cta { margin: 40px 0 0; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.doc .cta .fine { margin: 0; }
+.doc .release { margin: 48px 0 0; }
+.doc .release h2 { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; }
+.doc .release h2 time { font: 13px var(--mono); color: var(--ink3); font-weight: 400; letter-spacing: 0; }
+.notfound { min-height: 60vh; display: grid; place-content: center; text-align: center; padding: 120px var(--pad) 80px; }
+.notfound h1 { margin: 0; font-size: clamp(34px, 5vw, 56px); letter-spacing: -.03em; }
+.notfound p { color: var(--ink2); }
+.notfound .cta { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 24px; }

@@ -48,7 +48,7 @@ const en = {
   'price.eyebrow': '06 — Pricing', 'price.h': 'One price.<br><em>Yours to keep.</em>',
   'price.trial': '10 days, every feature. Then:', 'price.amount': '$4.99', 'price.unit': 'once',
   'price.b1': 'No subscription, ever', 'price.b2': 'Future Mac updates included', 'price.b3': 'Use it on up to 3 of your Macs', 'price.b4': 'Checkout by Creem — card or Apple Pay',
-  'price.cta': 'Buy with Creem', 'price.note': 'Buying opens the Motomotos app (1.0.5 or later): pay there and this Mac unlocks on its own, no key needed. No app yet? You can still pay on the web and paste the key.',
+  'price.cta': 'Buy with Creem', 'price.note': 'Buying opens the Motomotos app: pay there and this Mac unlocks on its own, no key needed. Paid on the web, or setting up another Mac? Enter the license key from your receipt email under Restore Purchase.',
   'pay.title': 'WeChat Pay',
   'pay.scan': 'Scan with WeChat',
   'pay.wait': 'Waiting for payment…',
@@ -77,7 +77,7 @@ const en = {
   'q5': 'How many Macs can I use?', 'a5': 'Up to three of your own Macs at once. Deactivate one to move to a fourth.',
   'q6': 'Why install from Terminal?', 'a6': 'Apple notarization isn’t set up yet. Once it is, a normal drag-to-Applications .dmg comes back.',
   'foot.tag': 'The AI Dynamic Island for your Mac.', 'foot.privacy': 'Privacy', 'foot.terms': 'Terms', 'foot.support': 'Support',
-  'foot.company': '深圳市爱发濠科技有限公司', 'foot.beian': '<a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">粤ICP备2026004847号-3</a>',
+  'foot.beian': '<a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">粤ICP备2026004847号-3</a>',
 };
 
 const zh = {
@@ -123,8 +123,8 @@ const zh = {
   'mn.happy': '开心', 'mn.error': '出错了', 'mn.eating': '吃小鱼干', 'mn.message': '看消息', 'mn.focusing': '专注中',
   'price.eyebrow': '06 — 价格', 'price.h': '一个价格，<br><em>买了就是你的。</em>',
   'price.trial': '先完整试用 10 天，然后：', 'price.amount': '¥19.9', 'price.unit': '买断',
-  'price.b1': '不订阅，永远不', 'price.b2': '含以后的 Mac 版本更新', 'price.b3': '最多 3 台自己的 Mac', 'price.b4': '支付宝安全支付',
-  'price.cta': '支付宝支付 ¥19.9', 'price.note': '点购买会打开 motomotos（1.0.5 及以上），在 App 里付完这台 Mac 自动解锁，不用激活码。没装 App 也能网页付款，付完把激活码粘贴到 设置 → 账户（最多 3 台 Mac）。',
+  'price.b1': '不订阅，永远不', 'price.b2': '含以后的 Mac 版本更新', 'price.b3': '付完这台 Mac 自动解锁', 'price.b4': '支付宝安全支付',
+  'price.cta': '支付宝支付 ¥19.9', 'price.note': '点购买会打开 motomotos，在 App 里用支付宝付完，这台 Mac 自动解锁。',
   'pay.title': '微信支付',
   'pay.scan': '请用微信扫一扫付款',
   'pay.wait': '等待支付结果…',
@@ -137,7 +137,7 @@ const zh = {
   'pay.error': '暂时无法下单，请稍后再试。',
   'pay.hint': '付款后把激活码粘贴到 motomotos → 设置 → 账户。',
 
-  'price.after': '试用到期只锁付费组件。收起的岛、时钟和小猫照常可用。',
+  'price.after': '试用到期后，AI 助手相关功能和其他组件要买断才能用。收起的岛、时钟和小猫照常可用。',
   'install.eyebrow': '07 — 安装', 'install.h': '终端里，<br><em>一行搞定。</em>',
   'install.p': '在开通 Apple 公证之前，motomotos 用终端安装：粘贴一次就好，也不会弹「无法验证开发者」。',
   'install.copy': '复制', 'install.copied': '已复制', 'install.failed': '请手动复制',
@@ -153,7 +153,7 @@ const zh = {
   'q5': '能装几台 Mac？', 'a5': '同时最多 3 台自己的 Mac。要换第 4 台，先在账户里停用一台。',
   'q6': '为什么要用终端安装？', 'a6': 'Apple 公证还没开通。开通后会恢复普通的 .dmg 拖拽安装。',
   'foot.tag': 'Mac 刘海上的 AI 灵动岛。', 'foot.privacy': '隐私', 'foot.terms': '条款', 'foot.support': '联系我们',
-  'foot.company': '深圳市爱发濠科技有限公司', 'foot.beian': '<a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">粤ICP备2026004847号-3</a>',
+  'foot.beian': '<a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">粤ICP备2026004847号-3</a>',
 };
 
 // Region priority: ?region= > localStorage mm_lang_v1 > sessionStorage geo > live IP > Accept-Language.
